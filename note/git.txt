@@ -1,0 +1,15 @@
+创建本地仓库
+在pycharm命令窗（Terminal）运行以下代码
+将本地项目初始化为一个仓库
+git init
+将项目提交到本地仓库中
+git commit -m "第一次提交"
+如果还有文件为红色，这个文件没有提交成功，再次提交
+git add xxx.py
+连接远程仓库(预先创建的）
+git remote add origin git@github.com:xxx/xxx.git
+将本地仓库的内容推送到远程
+git push origin master
+还有可能没有同步的，再次强制同步
+git push --force  origin master
+至此，可以到github 的master分支中查看我们上传的文件。

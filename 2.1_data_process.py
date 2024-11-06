@@ -260,41 +260,107 @@ def demonstrate_advanced_operations():
 
     # 2. 聚合操作
     print("2. 聚合操作:")
-    data = torch.randn(4, 5)
+    data = torch.randn(4, 5)          # 4行5列的张量
     print(f"原始数据:\n{data}")
     # reduce()参数说明:
     # - dim: 要归约的维度
     # - keepdim: 是否保持维度
-    print(f"按行求均值: {data.mean(dim=0)}")   # 按行求均值，.mean()是求均值
+    print(f"按行求均值: {data.mean(dim=0)}")   # 按行求均值，.mean()是求均值   即行数变为1，列数不变
     # dim=0表示按行求均值，dim=1表示按列求均值
-    print(f"按列求和: {data.sum(dim=1)}")   # 按列求和,.sum()是求和
+    print(f"按列求和: {data.sum(dim=1)}")   # 按列求和,.sum()是求和     即列数变为1，行数不变
+    #建议加上keepdim=True，这样输出的张量的维度与输入的张量的维度相同，即保持原来的维度。
     #特定行的平均值
     print(f"keepdim平均值: {data.mean(dim=0, keepdim=True)}")
     #特定列的和
     print(f"keepdim和: {data.sum(dim=1, keepdim=True)}")
 
+    # 创建一个三维张量
+    data_3d = torch.randn(2, 3, 4)  # 形状为 (2, 3, 4) 的三维张量
+    print(f"原始数据:\n{data_3d}")
+    # 按第三个维度（dim=2）求均值
+    mean_along_dim_2 = data_3d.mean(dim=2,keepdim=True)  # 形状变为 (2, 3)
+    print(f"按第三个维度求均值:\n{mean_along_dim_2}")    # 形状变为 (2, 3, 1)
+
+    demo3d_v=torch.tensor(
+        [  # 开始第一个维度（2个“块”）
+            [  # 开始第一个“块”的第二个维度（3行）
+                (0.0358, 0.1206, -0.8057, -0.2076),  # 第一个“块”的第一行（4个元素）
+                (-0.9319, -1.5910, -1.1360, -0.5226),  # 第一个“块”的第二行
+                (-0.1593, -0.4249, 0.9442, -0.1849)  # 第一个“块”的第三行
+            ],  # 结束第一个“块”
+            [  # 开始第二个“块”的第二个维度（3行）
+                (1.0608, 0.2083, -0.5778, 0.3255),  # 第二个“块”的第一行
+                (0.2618, -0.7599, -2.0461, -1.5295),  # 第二个“块”的第二行
+                (0.4049, 0.6319, 0.3125, -0.0335)  # 第二个“块”的第三行
+            ]  # 结束第二个“块”
+        ]  # 结束第一个维度
+    )
+    print(f"3d_v平均值: {demo3d_v.mean(dim=2,keepdim=True)}")    # 形状变为 (2, 3, 1)
+    print(f"3d_v和: {demo3d_v.sum(dim=2,keepdim=True)}")    # 形状变为 (2, 3, 1)
+
     # 3. 矩阵乘法
     print("\n3. 矩阵乘法:")
-    A = torch.randn(3, 4)
+    A = torch.randn(3, 4)     # 3行4列的矩阵
     B = torch.randn(4, 5)
-    C = torch.matmul(A, B)  # 矩阵乘法
-    print(f"矩阵乘法结果:\n{C}")
+    UA = torch.randn(4, 3)
+    C = torch.matmul(A, B)  # 矩阵乘法  shape: (3, 5)
+    UC = torch.matmul(UA, A)  # 矩阵乘法  shape: (4, 4)
+    print(f"矩阵乘法C结果:\n{C}")
+    print(f"矩阵乘法UC结果:\n{UC}")
+
+    # torch.matmul(UA, A)
+    # UA是(4, 3)矩阵A是(3, 4)矩阵结果是(4, 4)矩阵
+    # torch.matmul(A, UA)
+    # A是(3, 4)矩阵UA是(4, 3)矩阵结果是(3, 3)矩阵
+    # 这两个运算会得到完全不同的结果！这是因为矩阵乘法不满足交换律。
+    #
+    # UA(4×3) × A(3×4) = UC(4×4)
+    #
+    # [ua11 ua12 ua13]    [a11 a12 a13 a14]   [uc11 uc12 uc13 uc14]
+    # [ua21 ua22 ua23] ×  [a21 a22 a23 a24] = [uc21 uc22 uc23 uc24]
+    # [ua31 ua32 ua33]    [a31 a32 a33 a34]   [uc31 uc32 uc33 uc34]
+    # [ua41 ua42 ua43]                        [uc41 uc42 uc43 uc44]
+    #
+    # uc11 = ua11×a11 + ua12×a21 + ua13×a31
+    # uc12 = ua11×a12 + ua12×a22 + ua13×a32
+    # uc13 = ua11×a13 + ua12×a23 + ua13×a33
+    # uc14 = ua11×a14 + ua12×a24 + ua13×a34
+    # uc21 = ua21×a11 + ua22×a21 + ua23×a31
+    # uc22 = ua21×a12 + ua22×a22 + ua23×a32
+    # uc23 = ua21×a13 + ua22×a23 + ua23×a33
+    # uc24 = ua21×a14 + ua22×a24 + ua23×a34
 
     # 4. 范数计算
+    #范数指的是一个向量或矩阵中所有元素的绝对值的总和。
     print("\n4. 范数计算:")
-    print(f"L1范数: {torch.norm(data, p=1)}")
-    print(f"L2范数: {torch.norm(data, p=2)}")
+    print(f"L1范数: {torch.norm(data, p=1)}")   #L1范数指的是一个向量中所有元素的绝对值之和。
+    print(f"L2范数: {torch.norm(data, p=2)}")   #L2范数指的是一个向量中所有元素的平方和的平方根。
+    print(f"无穷范数: {torch.norm(data, p=float('inf'))}")   #无穷范数指的是一个向量中所有元素绝对值的最大值。
+    #float('inf')指的是正无穷大。类似的，float('-inf')指的是负无穷大。
+    #P参数：
+    # p=1, 则范数为向量中所有元素绝对值的和。
+    # p=2, 则范数为向量中所有元素平方和的平方根。
+    # p=3, 则范数为向量中所有元素立方和的立方根。
+    # p=∞, 则范数为向量中所有元素绝对值的最大值。
+
+
 
     # 5. 张量拼接
     print("\n5. 张量拼接:")
-    data1 = torch.randn(2, 3)
+    data1 = torch.randn(2, 3)     # 2行3列的张量
     data2 = torch.randn(2, 3)
-    concatenated = torch.cat([data1, data2], dim=0)  # 按行拼接
+    print(f"原始数据1:\n{data1}")
+    print(f"原始数据2:\n{data2}")
+    concatenated = torch.cat([data1, data2], dim=0)  # 按行拼接 shape: (4, 3)
     print(f"按行拼接结果:\n{concatenated}")
-    concatenated = torch.cat([data1, data2], dim=1)  # 按列拼接
+    concatenated = torch.cat([data1, data2], dim=1)  # 按列拼接 shape: (2, 6)
     print(f"按列拼接结果:\n{concatenated}")
 
     # 6. 张量分割
+    #split参数说明：split(tensor, split_size_or_sections, dim=0)
+    # - tensor: 要分割的张量
+    # - split_size_or_sections: 分割的大小或分割的数量
+    # - dim: 分割的维度
     print("\n6. 张量分割:")
     split_data = torch.split(data, 2, dim=0)  # 按行分割
     print(f"按行分割结果:\n{split_data}")
@@ -318,6 +384,8 @@ def demonstrate_advanced_operations():
 def main():
     # 设置随机种子以确保结果可重现
     torch.manual_seed(42)
+
+    # PyTorch的随机数生成器是基于一个种子（seed）的。如果你在代码中设置了随机种子，并且每次运行代码时都没有改变这个种子，那么生成的随机数序列将会是相同的。
 
     # 运行所有演示
     demonstrate_tensor_creation()
@@ -350,3 +418,10 @@ if __name__ == "__main__":
 # 当你使用subprocess.check_output(["tensorboard", "--logdir=runs"])时，Python脚本会暂停执行，并等待tensorboard命令完成。这意味着tensorboard进程是在前台运行的。
 # 由于check_output会等待进程完成并捕获其输出，所以你可以通过Ctrl+C来中断这个进程。当你按下Ctrl+C时，它会发送一个中断信号给前台进程，也就是正在运行的tensorboard命令，从而终止它。
 # 需要注意的是，虽然你可以通过Ctrl+C来中断使用check_output启动的tensorboard进程，但这并不是一种推荐的做法。check_output主要用于执行那些会快速完成并返回输出的命令。对于像tensorboard这样需要长时间运行的服务器进程来说，使用Popen并正确管理子进程可能是一个更好的选择。
+
+# 关于随机种子（random seed）：
+# 种子一样时，在一次运行代码流程中两次运行代码结果不同：通常，如果您在代码中没有显式地设置随机种子，那么每次调用 torch.randn 时都会得到不同的结果，即使在一次代码运行流程中多次调用也是如此。这是因为每次调用都会从随机数生成器中抽取新的随机数。
+# 但是每次重新运行代码第一次结果相同：如果您在代码的开始处设置了随机种子（例如，使用 torch.manual_seed(某个固定值)），那么每次重新运行整个代码时，第一次调用 torch.randn 将产生相同的结果。这是因为随机数生成器的初始状态（由种子决定）在每次代码运行时都是相同的。但是，随后的调用仍然会产生不同的随机数，除非您再次重置种子。
+
+
+# 根据以上教程，为了理解python深度学习中数据操作概念，参考以上文档，再给我比这个还正确，复杂的代码示例，可以比它更广更深，请为我写一个运行代码示例，要有详细的代码示例以展现这些参量最大使用场景与最大功能，整合到一个代码示例中，且在控制台要清晰显示这些函数用法，要介绍其相关函数的必选与可选传入参量和给我代码示例，注释要介绍你的代码在做什么，如介绍一个函数时，你需要把这个函数所有能接受的参数用中文介绍一下，控制台要输出:xx函数示例等等等。
