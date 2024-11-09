@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63abe224-d803-44d3-91b3-04eb4e8d8c7f" name="更改" comment="2024-11-7 0:30:00">
-      <change afterPath="$PROJECT_DIR$/2.3 linear algebra.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2.4 calculus.py" afterDir="false" />
+    <list default="true" id="63abe224-d803-44d3-91b3-04eb4e8d8c7f" name="更改" comment="2024-11-8 23:50">
+      <change afterPath="$PROJECT_DIR$/2.5 automatic differentiation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.1_data_process.py" beforeDir="false" afterPath="$PROJECT_DIR$/2.1_data_process.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2 data pre-processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/2.2 data pre-processing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2.4 calculus.py" beforeDir="false" afterPath="$PROJECT_DIR$/2.4 calculus.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +53,7 @@
     "Python.2.2 data pre-processing.executor": "Run",
     "Python.2.3 linear algebra.executor": "Run",
     "Python.2.4 calculus.executor": "Run",
+    "Python.2.5 automatic differentiation.executor": "Run",
     "Python.demo.executor": "Run",
     "Python.tensorboard.executor": "Run",
     "Python.tensorboard_demo.executor": "Run",
@@ -116,7 +115,9 @@
       <workItem from="1730932499890" duration="444000" />
       <workItem from="1730975857806" duration="9119000" />
       <workItem from="1731019866620" duration="164000" />
-      <workItem from="1731020771159" duration="19143000" />
+      <workItem from="1731020771159" duration="19246000" />
+      <workItem from="1731121504657" duration="3257000" />
+      <workItem from="1731128161790" duration="6829000" />
     </task>
     <task id="LOCAL-00001" summary="2024-11-5 19:20">
       <option name="closed" value="true" />
@@ -134,7 +135,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730910591461</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="2024-11-8 23:50">
+      <option name="closed" value="true" />
+      <created>1731081010523</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1731081010523</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -154,14 +163,16 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="2024-11-5 19:20" />
     <MESSAGE value="2024-11-7 0:30:00" />
-    <option name="LAST_COMMIT_MESSAGE" value="2024-11-7 0:30:00" />
+    <MESSAGE value="2024-11-8 23:50" />
+    <option name="LAST_COMMIT_MESSAGE" value="2024-11-8 23:50" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Pytorch$tensorboard.coverage" NAME="tensorboard 覆盖结果" MODIFIED="1730538251383" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$2_2_data_pre_processing.coverage" NAME="2.2 data pre-processing 覆盖结果" MODIFIED="1730986536786" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$2_3_linear_algebra.coverage" NAME="2.3 linear algebra 覆盖结果" MODIFIED="1731079781654" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Pytorch$2_5_automatic_differentiation.coverage" NAME="2.5 automatic differentiation 覆盖结果" MODIFIED="1731134701943" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$demo.coverage" NAME="demo 覆盖结果" MODIFIED="1730537270156" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Pytorch$2_4_calculus.coverage" NAME="2.4 calculus 覆盖结果" MODIFIED="1731080914541" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Pytorch$2_4_calculus.coverage" NAME="2.4 calculus 覆盖结果" MODIFIED="1731134149143" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$111.coverage" NAME="111 覆盖结果" MODIFIED="1730538912949" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$tensorboard_demo.coverage" NAME="tensorboard_demo 覆盖结果" MODIFIED="1730802228869" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/1" />
     <SUITE FILE_PATH="coverage/Pytorch$2_1_data_process.coverage" NAME="2.1_data_process 覆盖结果" MODIFIED="1730888559233" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
