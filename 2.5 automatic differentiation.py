@@ -35,8 +35,38 @@ print("标量输出 scalar_y (y 的和):", scalar_y)
 
 # 对 scalar_y 进行反向传播，计算 x 的梯度
 # 由于我们计划多次调用 backward()，需要设置 retain_graph=True 保留计算图
+# 注意：如果不设置 retain_graph=True，第二次反向传播会报错，因为计算图已经被释放
 scalar_y.backward(retain_graph=True)
 print("第一次反向传播后 x 的梯度 x.grad:", x.grad)
+#梯度表示了函数值随输入变化的敏感程度
+#x.gard是梯度累加，也就是导数
+
+# 输入节点：x，它是一个张量，包含值[1.0, 2.0, 3.0]。
+# 中间节点：
+# x**3：表示x的每个元素都被立方。
+# 2 * x**2：表示x的每个元素先平方，然后乘以2。
+# x：直接使用输入x的值。
+# 输出节点：
+# y = x**3 + 2 * x**2 + x：将上述三个中间节点的结果相加。
+# scalar_y = y.sum()：将y的所有元素求和，得到一个标量值。
+# 反向传播：
+# 从scalar_y开始，反向传播算法会回溯计算图，计算每个节点对scalar_y的梯度贡献。
+# 最终，算法会达到输入节点x，并计算出scalar_y相对于x的梯度，即dy/dx = 3*x^2 + 4*x + 1在x的每个值上的结果。
+# 这个计算图在反向传播过程中，会逐步计算出每个中间节点对最终输出的梯度贡献，并将这些贡献累积到输入张量x的.grad属性中。因此，当你打印x.grad时，你看到的是函数y = x^3 + 2*x^2 + x在x = [1.0, 2.0, 3.0]处的导数值。
+
+#需要标量来反向传播
+# y = x**3 + 2 * x**2 + x
+# 这个y是个张量，我们需要先通过 y.sum() 得到一个标量 scalar_y，然后才能对 scalar_y 调用 .backward()。
+# 我们可以对 scalar_y 调用 .backward()，因为 scalar_y 是一个标量，并且PyTorch会自动计算 scalar_y 关于所有具有 requires_grad=True 的叶节点的梯度。
+# 而如果
+# def f(x):
+#     return x**3 + 2 * x**2 + x
+#
+# x = torch.tensor([1.0, 2.0, 3.0], requires_grad=True)
+# y=f(x)
+# y.backward()
+# 这个y是个标量，不需要再调用.sum()
+
 
 # ==========================
 # 5. 多次反向传播的情况
@@ -46,12 +76,18 @@ print("第一次反向传播后 x 的梯度 x.grad:", x.grad)
 # 如果不清零梯度，新的梯度会累加到原来的梯度上
 scalar_y.backward(retain_graph=True)
 print("第二次反向传播后 x 的梯度 x.grad:", x.grad)
+# 由于梯度是累加的，因此第二次反向传播的梯度会比第一次的梯度大
+# 这是因为第二次反向传播会将第一次反向传播得到的梯度累加到 x.grad 中
+# 在PyTorch中，当你第二次调用scalar_y.backward(retain_graph=True)时，它并不会自动计算二阶导数。相反，它会重新计算一阶导数，并将这些梯度值累加到已经存在的梯度上（如果之前的梯度没有被手动清零的话）。
 
 # 为了避免梯度累加，在每次反向传播前清零梯度
 x.grad.zero_()
 scalar_y.backward(retain_graph=True)
 print("清零梯度后再次反向传播 x.grad:", x.grad)
 
+
+# 在PyTorch中，.backward() 函数是用于执行反向传播的，它是自动微分引擎（autograd）的核心部分。当你对一个标量（scalar）张量调用 .backward() 时，PyTorch会计算该张量相对于所有具有requires_grad=True的叶节点的梯度。
+# retain_graph=True 参数的作用是告诉PyTorch在执行完反向传播后保留计算图。默认情况下，为了节省内存，一旦 .backward() 被调用并且梯度被计算，计算图就会被释放。但是，在某些情况下，你可能想要在同一个计算图上多次执行反向传播，这时就需要设置 retain_graph=True。
 
 # 错误原因： 当您第一次调用 scalar_y.backward() 时，PyTorch 会默认释放计算图。如果您随后再次调用 backward()，会因为计算图已经被释放而报错。
 # 解决方法： 在第一次调用 backward() 时，设置 retain_graph=True，以保留计算图，允许多次反向传播。
@@ -68,28 +104,38 @@ print("清零梯度后再次反向传播 x.grad:", x.grad)
 # 为了计算二阶导数，需要对一阶梯度再次求导
 # 首先，保留计算图，并获取一阶梯度
 x.grad.zero_()
+# create_graph=True 表示创建计算图，以便计算高阶导数
 scalar_y.backward(create_graph=True)
+# 克隆一阶梯度，避免对原始梯度进行修改
 first_order_grad = x.grad.clone()
 print("一阶梯度 first_order_grad:", first_order_grad)
 
 # 对一阶梯度求和，得到一个标量，然后对 x 进行反向传播，计算二阶导数
 # 由于一阶梯度是一个向量，需要将其与一个同形状的张量相乘后求和，得到标量
 grad_outputs = torch.ones_like(x)
+# 注意：grad_outputs 必须与 x 形状相同，否则会报错
+# backward() 函数的参数 grad_outputs 用于指定反向传播的梯度。这里是一个与 x 形状相同的单位张量，用于指定反向传播的梯度。
 first_order_grad.backward(grad_outputs)
 second_order_grad = x.grad.clone()
 print("二阶导数 second_order_grad:", second_order_grad)
 
+# 在PyTorch中，当你想要计算一个张量相对于另一个张量的梯度时，.backward() 函数是用来执行这个操作的。在大多数情况下，当你对一个标量张量调用 .backward() 时，你不需要传递任何参数，因为标量对自身的梯度就是1，所以反向传播会自然地计算所有相关的梯度。
+# 为什么使用单位张量：在计算二阶导数时，你首先需要计算一阶导数。这个一阶导数本身可能是一个向量或矩阵（如果 x 不是一个标量）。为了从这个一阶导数张量继续反向传播以计算二阶导数，你需要提供一个 grad_outputs 参数。使用单位张量是因为你通常对一阶导数的每个分量都“感兴趣”，并且想要在二阶导数计算中考虑它们。单位张量确保了每个分量都以相同的权重（即1）贡献到二阶导数的计算中。
+# 计算二阶导数：通过在一阶导数上调用 .backward(grad_outputs)，你实际上是在告诉PyTorch：“我已经有了关于 x 的一阶导数，现在我想要根据这个导数继续反向传播以计算二阶导数。”由于你提供的是单位张量，因此二阶导数将考虑一阶导数的所有分量。
+
 # ==========================
 # 7. 分离计算图
 # ==========================
-
+#计算图指的是在计算过程中PyTorch 构建的一个有向无环图（DAG），用于记录张量之间的操作关系。在反向传播时，PyTorch 会沿着这个计算图反向传播梯度，计算每个张量对其他张量的梯度。
+#张量：在PyTorch中，张量是基本的数据结构，用于表示多维数组。张量可以是标量、向量、矩阵或更高维度的数组。
+#标量：标量是一个只有一个元素的张量。例如，1.0 是一个标量。
 # 有时需要将某些计算从计算图中分离出来，使用 detach() 方法
 x.grad.zero_()
 y_detached = y.detach()  # detach() 返回一个新的张量，与 y 有相同的数据，但无梯度关系
 z = y_detached * x
 scalar_z = z.sum()
 scalar_z.backward()
-print("使用 detach() 后的梯度 x.grad:", x.grad)
+print("使用 detach() 后的梯度 x.grad:", x.grad)   #相当于对y_detached * x 求导
 
 # 注意：由于 y_detached 与 x 无梯度关系，因此 z 对 x 的梯度只来自于 x，而不包括 y 对 x 的梯度
 
@@ -101,7 +147,7 @@ print("使用 detach() 后的梯度 x.grad:", x.grad)
 def control_flow(x):
     y = x
     for _ in range(5):
-        if y.norm() < 1000:
+        if y.norm() < 1000: #欧几里得范数 L2 范数   各元素的平方和的平方根来计算
             y = y * 2
     if y.sum() > 0:
         out = y
@@ -110,24 +156,62 @@ def control_flow(x):
     return out
 
 # 创建一个标量张量 a，要求梯度
-a = torch.tensor([2.0], requires_grad=True)
+a = torch.tensor([2.0], requires_grad=True) #a 是一个标量张量，requires_grad=True 表示需要对 a 计算梯度
 print("控制流输入 a:", a)
 
 # 计算控制流函数的输出
+# 虽然a只包含一个元素（即它是标量的），但在PyTorch中，它仍然被视为一个张量。因此，当你调用control_flow(a)时，x在control_flow函数内部实际上是一个一维张量，而不是一个纯粹的标量。这意味着你可以对它调用.norm()和.sum()这样的张量方法。
 b = control_flow(a)
 print("控制流输出 b:", b)
+# 在PyTorch中，即使是一个包含单个元素的张量，也拥有这些方法，因为这些方法被定义为张量的操作，而不是标量的操作。所以，在control_flow函数中，y.norm()将计算这个一维张量的欧几里得范数（在这种情况下，它实际上就是张量中唯一元素的绝对值），而y.sum()将返回张量中所有元素的和（在这里，由于张量只有一个元素，所以和就是那个元素本身）。
 
 # 对输出 b 进行反向传播，计算 a 的梯度
 b.backward()
 print("控制流中 a 的梯度 a.grad:", a.grad)
 
+# 在示例中，你创建了一个张量a并显式设置了requires_grad=True。这是因为你希望PyTorch跟踪对a执行的所有操作，以便后续能够计算关于a的梯度。如果你没有设置requires_grad=True，那么PyTorch就不会跟踪这些操作，也就不会构建计算图。因此，在后续调用.backward()时，就无法计算梯度了。
+# 总结来说：
+# y.sum()能直接反向传播是因为y（或y的祖先张量）是在requires_grad=True的上下文中创建的，所以y.sum()得到的结果张量也继承了需要梯度的属性。
+# 第二个示例需要requires_grad=True是因为你希望从创建张量a的那一刻开始，就让PyTorch跟踪所有涉及a的操作，以便后续能够计算梯度。
+
+# 首先，我们来看看control_flow函数对输入张量x（在这里是a）做了什么：
+# 初始化y为x的值，即y = x = [2.0]（这是一个一维张量，包含一个元素2.0）。
+# 进入一个循环，该循环会执行5次。在每次迭代中，都会检查y的L2范数（欧几里得范数）是否小于1000。由于y是一个标量张量，其L2范数就是它自己的绝对值。在开始时，y的绝对值是2.0，显然小于1000。
+# 如果y的L2范数小于1000，y的值就会翻倍。在我们的例子中，这意味着在每次循环迭代中，y的值都会乘以2。因此，经过5次迭代后，y的值将变为2.0 * 2^5 = 64.0。
+# 循环结束后，检查y的元素之和是否大于0。在我们的情况下，y是一个包含单个元素64.0的张量，所以其和就是64.0，显然大于0。
+# 由于y.sum() > 0，函数返回out = y，即out = [64.0]。
+# 现在，让我们来看看为什么a.grad的值是32：
+# 在PyTorch中，当我们对某个张量执行操作时（比如乘法、加法等），这些操作会创建一个新的计算图节点，用于在后续的反向传播过程中计算梯度。在我们的例子中，y = y * 2这样的操作会在计算图中创建节点。
+# 当我们调用b.backward()时，PyTorch开始从b（即out）反向遍历计算图，计算每个节点的梯度，并累积到原始张量（在这里是a）的.grad属性中。
+# 对于我们的函数来说，b关于a的梯度实际上是函数control_flow在a处的导数。由于control_flow函数在a处是一个简单的幂函数（具体来说是a * 2^5），其导数是2^5 = 32。
+# 因此，当我们调用b.backward()后，a.grad的值被设置为32，这表示如果我们对a进行微小的改变，b的值将按照32倍的速率改变。
+# 总结来说，a.grad的值为32是因为在control_flow函数中，a的值被连续乘以2五次，导致b关于a的导数为32。
+
+# b.backward()执行的是反向传播算法，该算法通过计算图从输出（在这里是b或out，其值为64）回溯到输入（在这里是a），同时计算并累积每个中间节点对最终输出的梯度贡献。在这个特定的例子中，由于control_flow函数对a的操作是一个连续的乘法序列（每次乘以2），因此反向传播时计算的梯度实际上就是这一系列乘法操作的累积效应。
+# 具体来说，对于a的梯度计算，可以看作是每次翻倍操作对最终输出64的“贡献”被累积起来。在这个例子中，由于每次翻倍都是乘以2，因此累积的梯度就是2的5次方（因为是5次翻倍操作），即32。这个累积的梯度值最终被存储在a.grad中。
+
+
+
+
+# 矩阵的范数指的是每个元素的平方和开平方根。
 # 如果将 a 改为随机向量或矩阵
-a = torch.randn((2, 2), requires_grad=True)
+a = torch.randn((2, 2), requires_grad=True) #requires_grad=True 表示Pytorch需要对 a 计算梯度
 print("新的控制流输入 a:", a)
 b = control_flow(a)
 print("新的控制流输出 b:", b)
-b.backward(torch.ones_like(a))
+b.backward(torch.ones_like(b))
 print("新的控制流中 a 的梯度 a.grad:", a.grad)
+#最后梯度可能为tensor([[3200., 3200.],
+        # [3200., 3200.]])
+#也可能为tensor([[32., 32.],
+        # [32., 32.]])
+
+#randn 函数生成的张量的元素是从标准正态分布中随机采样得到的，均值为0，标准差为1。
+# torch.randn函数生成的值是从标准正态分布（均值为0，标准差为1）中随机采样的，因此其均值理论上应该为0。然而，由于这是随机过程，每次生成的值的均值可能会有所不同，不会每次都恰好为0。如果你多次运行torch.randn并计算其结果的均值，你会发现均值会接近0，但可能永远不会恰好为0。
+#不确定y.sum()的符号
+#不确定是否执行else
+#不确定最后导数为   (a*2^5*100)'或(a*2^5)'
+#不确定a.grad为 3200 或 32
 
 # ==========================
 # 9. 梳理本章用到的函数
