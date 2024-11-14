@@ -225,6 +225,7 @@ for epoch in range(num_epochs):  # num_epochs是总的训练轮数
         optimizer.step()  # 根据计算出的梯度更新模型参数
 '''
 
+
 # 2.7.7. 损失函数示例
 print("\n2.7.7. 损失函数示例")
 loss_fn = nn.CrossEntropyLoss() # 交叉熵损失函数
