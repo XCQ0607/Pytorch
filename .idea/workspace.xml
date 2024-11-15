@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63abe224-d803-44d3-91b3-04eb4e8d8c7f" name="更改" comment="2024-11-13 0:25">
-      <change afterPath="$PROJECT_DIR$/3.3 Simple Implementation of Linear Regression.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/3.4 softmax regression.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/3.5 image classification datasets.py" afterDir="false" />
+    <list default="true" id="63abe224-d803-44d3-91b3-04eb4e8d8c7f" name="更改" comment="2024-11-15 0:37">
+      <change afterPath="$PROJECT_DIR$/3.6 softmax regression from zero implementation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.1_data_process.py" beforeDir="false" afterPath="$PROJECT_DIR$/2.1_data_process.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.7 consult the documentation.py" beforeDir="false" afterPath="$PROJECT_DIR$/2.7 consult the documentation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/3.1 linear regression.py" beforeDir="false" afterPath="$PROJECT_DIR$/3.1 linear regression.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/3.2 Zero-Start Realization of Linear Regression.py" beforeDir="false" afterPath="$PROJECT_DIR$/3.2 Zero-Start Realization of Linear Regression.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3.5 image classification datasets.py" beforeDir="false" afterPath="$PROJECT_DIR$/3.5 image classification datasets.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +65,7 @@
     "Python.3.3 Simple Implementation of Linear Regression.executor": "Run",
     "Python.3.4 softmax regression.executor": "Run",
     "Python.3.5 image classification datasets.executor": "Run",
+    "Python.3.6 softmax regression from zero implementation.executor": "Run",
     "Python.demo.executor": "Run",
     "Python.tensorboard.executor": "Run",
     "Python.tensorboard_demo.executor": "Run",
@@ -83,7 +79,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.baidu.comate.intellij.config.id",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -154,7 +150,12 @@
       <workItem from="1731565798692" duration="1446000" />
       <workItem from="1731567414910" duration="66000" />
       <workItem from="1731567514124" duration="12477000" />
-      <workItem from="1731597528317" duration="3054000" />
+      <workItem from="1731597528317" duration="3921000" />
+      <workItem from="1731649097782" duration="409000" />
+      <workItem from="1731654163849" duration="646000" />
+      <workItem from="1731654921702" duration="230000" />
+      <workItem from="1731655158318" duration="1637000" />
+      <workItem from="1731678424099" duration="6948000" />
     </task>
     <task id="LOCAL-00001" summary="2024-11-5 19:20">
       <option name="closed" value="true" />
@@ -212,7 +213,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731428716973</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="2024-11-15 0:37">
+      <option name="closed" value="true" />
+      <created>1731602260370</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1731602260370</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -249,7 +258,8 @@
     <MESSAGE value="2024-11-10 0:38" />
     <MESSAGE value="2024-11-11 23:09" />
     <MESSAGE value="2024-11-13 0:25" />
-    <option name="LAST_COMMIT_MESSAGE" value="2024-11-13 0:25" />
+    <MESSAGE value="2024-11-15 0:37" />
+    <option name="LAST_COMMIT_MESSAGE" value="2024-11-15 0:37" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Pytorch$tensorboard.coverage" NAME="tensorboard 覆盖结果" MODIFIED="1730538251383" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -263,11 +273,12 @@
     <SUITE FILE_PATH="coverage/Pytorch$demo.coverage" NAME="demo 覆盖结果" MODIFIED="1730537270156" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$2_2_data_pre_processing.coverage" NAME="2.2 data pre-processing 覆盖结果" MODIFIED="1730986536786" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$2_3_linear_algebra.coverage" NAME="2.3 linear algebra 覆盖结果" MODIFIED="1731079781654" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Pytorch$3_6_softmax_regression_from_zero_implementation.coverage" NAME="3.6 softmax regression from zero implementation 覆盖结果" MODIFIED="1731685448643" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$3_4_softmax_regression.coverage" NAME="3.4 softmax regression 覆盖结果" MODIFIED="1731597595025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$3_3_Simple_Implementation_of_Linear_Regression.coverage" NAME="3.3 Simple Implementation of Linear Regression 覆盖结果" MODIFIED="1731580087445" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$111.coverage" NAME="111 覆盖结果" MODIFIED="1730538912949" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$tensorboard_demo.coverage" NAME="tensorboard_demo 覆盖结果" MODIFIED="1730802228869" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/1" />
-    <SUITE FILE_PATH="coverage/Pytorch$3_5_image_classification_datasets.coverage" NAME="3.5 image classification datasets 覆盖结果" MODIFIED="1731601128714" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Pytorch$3_5_image_classification_datasets.coverage" NAME="3.5 image classification datasets 覆盖结果" MODIFIED="1731685232148" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$2_5_automatic_differentiation.coverage" NAME="2.5 automatic differentiation 覆盖结果" MODIFIED="1731169454512" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
