@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63abe224-d803-44d3-91b3-04eb4e8d8c7f" name="更改" comment="2024-11-19 00:03">
-      <change afterPath="$PROJECT_DIR$/4.5..py" afterDir="false" />
+    <list default="true" id="63abe224-d803-44d3-91b3-04eb4e8d8c7f" name="更改" comment="2024-11-21 0:12">
+      <change afterPath="$PROJECT_DIR$/Dropout.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4.4 Model Selection, Underfitting, and Overfitting.py" beforeDir="false" afterPath="$PROJECT_DIR$/4.4 Model Selection, Underfitting, and Overfitting.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/4.5..py" beforeDir="false" afterPath="$PROJECT_DIR$/4.5 weight decay.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +71,9 @@
     "Python.4.2 Implementation of multilayer perceptron from scratch.executor": "Run",
     "Python.4.3 Concise Implementation of Multilayer Perceptron.executor": "Run",
     "Python.4.4 Model Selection, Underfitting, and Overfitting.executor": "Run",
+    "Python.4.5 weight decay.executor": "Run",
     "Python.4.5..executor": "Run",
+    "Python.Dropout.executor": "Run",
     "Python.demo.executor": "Run",
     "Python.tensorboard.executor": "Run",
     "Python.tensorboard_demo.executor": "Run",
@@ -169,6 +171,8 @@
       <workItem from="1731943382475" duration="1878000" />
       <workItem from="1732005385528" duration="3419000" />
       <workItem from="1732114855481" duration="4067000" />
+      <workItem from="1732118945277" duration="169000" />
+      <workItem from="1732196999645" duration="3997000" />
     </task>
     <task id="LOCAL-00001" summary="2024-11-5 19:20">
       <option name="closed" value="true" />
@@ -258,7 +262,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731945768239</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="2024-11-21 0:12">
+      <option name="closed" value="true" />
+      <created>1732119105824</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1732119105824</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -299,7 +311,8 @@
     <MESSAGE value="2024-11-15 23:55" />
     <MESSAGE value="2024-11-17 00:03" />
     <MESSAGE value="2024-11-19 00:03" />
-    <option name="LAST_COMMIT_MESSAGE" value="2024-11-19 00:03" />
+    <MESSAGE value="2024-11-21 0:12" />
+    <option name="LAST_COMMIT_MESSAGE" value="2024-11-21 0:12" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Pytorch$3_7_Simple_implementation_of_softmax_regression.coverage" NAME="3.7 Simple implementation of softmax regression 覆盖结果" MODIFIED="1731722802093" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -326,5 +339,7 @@
     <SUITE FILE_PATH="coverage/Pytorch$2_2_data_pre_processing.coverage" NAME="2.2 data pre-processing 覆盖结果" MODIFIED="1730986536786" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$3_4_softmax_regression.coverage" NAME="3.4 softmax regression 覆盖结果" MODIFIED="1731597595025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$4_2_Implementation_of_multilayer_perceptron_from_scratch.coverage" NAME="4.2 Implementation of multilayer perceptron from scratch 覆盖结果" MODIFIED="1731940087364" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Pytorch$Dropout.coverage" NAME="Dropout 覆盖结果" MODIFIED="1732201742956" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Pytorch$4_5_weight_decay.coverage" NAME="4.5 weight decay 覆盖结果" MODIFIED="1732197207162" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

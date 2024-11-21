@@ -95,7 +95,7 @@ def squared_loss(y_hat, y):
     return (y_hat - y.reshape(y_hat.shape)) ** 2 / 2
 
 # 定义优化算法（小批量随机梯度下降）
-def sgd(params, lr, batch_size):
+def sgd(params, lr, batch_size):    #sgd是小批量随机梯度下降的缩写
     """小批量随机梯度下降优化算法
 
     参数：
@@ -105,8 +105,16 @@ def sgd(params, lr, batch_size):
     """
     with torch.no_grad():
         for param in params:
-            param -= lr * param.grad / batch_size
-            param.grad.zero_()
+            param -= lr * param.grad / batch_size   #更新参数
+            param.grad.zero_()  #清空梯度
+# 更新参数时为什么要清空梯度？
+#     在神经网络训练中，梯度是累积的。每次反向传播时，梯度值会累加到之前计算的梯度上。如果不清空梯度，下一次的梯度更新就会基于之前累积的梯度，这会导致更新方向不准确，进而影响模型的训练效果。因此，在每次参数更新后，我们需要清空梯度，以确保下一次的梯度计算是从零开始的，从而得到正确的更新方向。
+# lr * param.grad / batch_size有什么意义？
+#     这个表达式是随机梯度下降（SGD）算法中参数更新的核心部分。
+#     lr（学习率）是一个超参数，用于控制参数更新的步长。较大的学习率可能导致训练不稳定，而较小的学习率可能导致训练速度缓慢。
+#     param.grad 是当前参数的梯度值，它指示了为了最小化损失函数，参数应该调整的方向和幅度。
+#     batch_size 是小批量的大小。在随机梯度下降中，我们不是使用整个数据集来计算梯度，而是使用一个小批量。由于我们只使用了一部分数据来计算梯度，因此需要对梯度进行归一化，以确保更新步长不会因为批量大小的变化而变化。除以 batch_size 就是一种常用的归一化方法。
+# 综上所述，lr * param.grad / batch_size 这个表达式计算了参数应该更新的方向和幅度。通过减去这个值，我们实现了参数的更新，从而逐步优化模型。
 
 # 定义L2范数惩罚项
 def l2_penalty(w):
@@ -145,7 +153,7 @@ def train(lambd):
             # 计算模型输出
             y_hat = linreg(X, w, b)
             # 计算损失（包含L2惩罚项）
-            loss = squared_loss(y_hat, y) + lambd * l2_penalty(w)
+            loss = squared_loss(y_hat, y) + lambd * l2_penalty(w)   #损失函数中加入了L2惩罚项
             # 反向传播
             loss.sum().backward()
             # 更新参数
@@ -158,7 +166,22 @@ def train(lambd):
         if (epoch + 1) % 10 == 0:
             print(f'周期 {epoch + 1}, 训练损失 {train_loss[-1]:f}, 测试损失 {test_loss[-1]:f}')
 
+    # 在深度学习中，损失函数（loss function）是用来衡量模型预测值与真实值之间差距的函数，而优化算法（如梯度下降）则是通过调整模型参数来最小化这个损失函数。当你向损失函数中加入L2惩罚项（也称为权重衰减）时，你实际上是在改变损失函数的形状，这会影响梯度计算的结果。
+    #
+    # 具体来说，在你的例子中：
+    # loss = squared_loss(y_hat, y) + lambd * l2_penalty(w)  # 损失函数中加入了L2惩罚项
+    # # 反向传播
+    # loss.sum().backward()
+    #
+    # squared_loss(y_hat, y)表示预测值y_hat与真实值y之间的平方损失，而lambd * l2_penalty(w)是L2惩罚项，其中lambd是控制惩罚项强度的超参数，l2_penalty(w)通常是模型权重w的平方和。
+    # 当你调用loss.sum().backward()时，PyTorch会自动计算损失函数相对于模型参数的梯度。这里的梯度计算会考虑整个损失函数，包括L2惩罚项。因此，加入L2惩罚项确实会影响梯度计算的对象与内容。
+    #
+    # 对象：梯度计算的对象是模型参数，即那些需要通过优化算法进行调整的变量。在这个例子中，w
+    # 是模型参数之一，而L2惩罚项是直接作用于w的。因此，当计算梯度时，会同时考虑平方损失项和L2惩罚项对w的影响。
+    # 内容：梯度计算的内容是损失函数相对于每个模型参数的偏导数。这些偏导数指示了为了最小化损失函数，应该如何调整每个参数。由于L2惩罚项增加了权重值的成本，因此它会倾向于推动权重向零靠近（但不一定完全为零），这有助于防止模型过拟合。这种影响会体现在计算出的梯度中，使得在更新参数时不仅考虑减少预测误差，还要考虑减少权重的大小。
+
     # 绘制损失曲线
+
     plt.figure(figsize=(10, 6))
     plt.semilogy(range(1, num_epochs + 1), train_loss, label='训练损失')
     plt.semilogy(range(1, num_epochs + 1), test_loss, label='测试损失')
