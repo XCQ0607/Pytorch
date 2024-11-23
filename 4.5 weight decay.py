@@ -116,6 +116,11 @@ def sgd(params, lr, batch_size):    #sgd是小批量随机梯度下降的缩写
 #     batch_size 是小批量的大小。在随机梯度下降中，我们不是使用整个数据集来计算梯度，而是使用一个小批量。由于我们只使用了一部分数据来计算梯度，因此需要对梯度进行归一化，以确保更新步长不会因为批量大小的变化而变化。除以 batch_size 就是一种常用的归一化方法。
 # 综上所述，lr * param.grad / batch_size 这个表达式计算了参数应该更新的方向和幅度。通过减去这个值，我们实现了参数的更新，从而逐步优化模型。
 
+# param.grad / batch_size 确实是一种归一化的方法，用于调整梯度的大小，使其不依赖于批量（batch）的大小。这样做有助于确保无论批量大小如何，参数更新的步长都保持在一个相对稳定的范围内。
+# 在神经网络训练中，我们通常使用小批量梯度下降（Mini-batch Gradient Descent）或其变种来优化模型的参数。这意味着在每次迭代中，我们只使用数据集的一个小子集（即一个小批量）来计算损失函数和梯度。由于不同批量的数据可能具有不同的特性，因此它们产生的梯度也可能有所不同。
+# 如果我们直接使用这些梯度来更新参数，那么更新步长将会受到批量大小的影响。具体来说，较大的批量可能会产生较大的梯度，从而导致参数更新步长过大；而较小的批量则可能产生较小的梯度，导致参数更新步长过小。这都不是我们想要的结果，因为我们希望参数更新的步长能够相对稳定，以便更好地控制训练过程。
+# 为了解决这个问题，我们可以将梯度除以批量大小来进行归一化。这样做可以消除批量大小对梯度大小的影响，使得参数更新的步长更加稳定和一致。因此，param.grad / batch_size 是一种常用的归一化方法，用于确保参数更新的稳定性和有效性。
+
 # 定义L2范数惩罚项
 def l2_penalty(w):
     """计算L2范数惩罚项
@@ -126,7 +131,7 @@ def l2_penalty(w):
     返回：
     Tensor: L2惩罚项
     """
-    return torch.sum(w.pow(2)) / 2
+    return torch.sum(w.pow(2)) / 2  #L2范数惩罚项
 
 # 训练函数
 def train(lambd):
@@ -157,7 +162,7 @@ def train(lambd):
             # 反向传播
             loss.sum().backward()
             # 更新参数
-            sgd([w, b], lr, batch_size)
+            sgd([w, b], lr, batch_size)  #使用sgd更新参数
         # 记录损失
         with torch.no_grad():
             train_loss.append(squared_loss(linreg(features_train, w, b), labels_train).mean().item())
@@ -187,6 +192,8 @@ def train(lambd):
     plt.semilogy(range(1, num_epochs + 1), test_loss, label='测试损失')
     plt.xlabel('周期')
     plt.ylabel('损失')
+    #图表标题为  使用权重衰减（lambda=lambd）的训练和测试损失曲线
+    plt.title(f'使用权重衰减（lambda={lambd}）的训练和测试损失曲线')
     plt.legend()
     plt.show()
 
@@ -216,17 +223,44 @@ def train_concise(wd):
     # 定义模型
     net = nn.Linear(num_inputs, 1)
     # 初始化参数
-    nn.init.normal_(net.weight, mean=0, std=0.01)
-    nn.init.zeros_(net.bias)
+    nn.init.normal_(net.weight, mean=0, std=0.01)   #初始化net的weight参数
+    nn.init.zeros_(net.bias)    #初始化net的bias参数
 
     # 定义损失函数
     loss = nn.MSELoss()
 
     # 定义优化器，传入权重衰减参数weight_decay
-    optimizer = torch.optim.SGD([
+    optimizer = torch.optim.SGD([   #SDG是随机梯度下降的缩写
         {'params': net.weight, 'weight_decay': wd},
         {'params': net.bias}
     ], lr=0.003)
+
+    # 在PyTorch的torch.optim.SGD优化器中，weight_decay参数用于指定权重衰减（也称为L2正则化）的系数。权重衰减是一种正则化技术，用于防止模型在训练过程中过拟合。通过在优化过程中向损失函数添加一个与权重参数平方成比例的项，权重衰减鼓励模型使用更小的权重值，这通常有助于提升模型的泛化能力。
+    # 对于net.weight参数组，你明确指定了一个weight_decay值wd。这意味着在每次更新net.weight时，优化器都会考虑权重衰减。具体来说，每次梯度下降更新时，net.weight的梯度会被加上一个与net.weight本身成比例的项（比例系数为wd），然后再进行更新。这样，net.weight中的较大值会受到更大的惩罚，从而鼓励模型使用更小的权重。
+    #
+    # wd参数的值决定了权重衰减的强度。较大的wd值会导致更强的正则化效果，即权重在更新过程中会更快地趋向于零。相反，较小的wd值则会导致较弱的正则化效果。选择合适的wd值通常需要一些实验和调整，以便在防止过拟合和保持模型性能之间找到平衡。
+    # 需要注意的是，在你的代码片段中，net.bias参数组没有指定weight_decay，因此偏置项在更新时不会受到权重衰减的影响。这是因为通常认为偏置项对于模型的复杂度贡献较小，所以不需要对其进行正则化。
+
+    # {'params': net.weight, 'weight_decay': wd}：
+    # 'params': net.weight指定了这一组参数是网络的权重（net.weight）。这里的net是一个PyTorch神经网络模型，而net.weight通常指的是模型中所有权重参数的集合（但具体取决于net的实现，一般需要通过net.parameters()来获取所有参数）。如果net.weight是特意定义的只包含权重的参数组，那这里的用法就是正确的。否则，通常的做法是使用net.parameters()或单独筛选出权重参数。
+    # 'weight_decay': wd指定了权重衰减（weightdecay）的系数，用于正则化。权重衰减是一种防止模型过拟合的技术，它通过在优化过程中对权重参数施加惩罚来实现。wd是权重衰减系数的具体值，需要在代码的其他部分定义。
+    #
+    # {'params': net.bias}：
+    # 'params': net.bias指定了这一组参数是网络的偏置项（net.bias）。和net.weight类似，net.bias通常指的是模型中所有偏置参数的集合（具体也取决于net的实现）。如果net是标准的PyTorch神经网络层或模型，通常不会直接有net.bias这样的属性，除非被特意定义。一般情况下，偏置项会和权重一起通过net.parameters()获取。这两组字典作为列表的元素传递给torch.optim.SGD，意味着优化器将分别对权重（可能带有权重衰减）和偏置进行不同的优化处理。
+
+    # 你可以通过遍历net.parameters()来查看这些参数：
+    # for param in net.parameters():
+    #     print(param.shape)
+    # #这段代码会输出每个参数的形状，对于你的线性层，
+    # 输出应该是
+    # torch.Size([1, num_inputs])  # 权重的形状
+    # torch.Size([1])  # 偏置的形状
+    #
+    # 如果你想单独获取权重或偏置，你可以这样做：
+    # # 获取权重
+    # weight = list(net.parameters())[0]
+    # # 获取偏置
+    # bias = list(net.parameters())[1]
 
     num_epochs = 100
 
@@ -241,7 +275,7 @@ def train_concise(wd):
             y_hat = net(X)
             l = loss(y_hat, y)
             l.backward()
-            optimizer.step()
+            optimizer.step()    #使用optimizer.step()更新模型参数,包含weight decay
         # 记录损失
         with torch.no_grad():
             train_loss.append(loss(net(features_train), labels_train).item())
@@ -252,15 +286,25 @@ def train_concise(wd):
 
     # 绘制损失曲线
     plt.figure(figsize=(10, 6))
-    plt.semilogy(range(1, num_epochs + 1), train_loss, label='训练损失')
-    plt.semilogy(range(1, num_epochs + 1), test_loss, label='测试损失')
-    plt.xlabel('周期')
-    plt.ylabel('损失')
-    plt.legend()
+    plt.semilogy(range(1, num_epochs + 1), train_loss, label='训练损失')    #semilogy是绘制对数坐标图的函数
+    plt.semilogy(range(1, num_epochs + 1), test_loss, label='测试损失')    #semilogy是绘制对数坐标图的函数
+    #对数坐标图
+        # 对数坐标图是一种在坐标轴上使用对数刻度的图表。在这种图表中，坐标轴上的刻度不是等距的，而是按照对数比例分布的。这种图表特别适用于展示数量级差异很大的数据，因为对数刻度可以更好地展示这种差异。
+        # 在你提供的代码片段中，plt.semilogy()函数是Matplotlib库中的一个函数，用于绘制y轴为对数刻度的图表。这意味着，在生成的图表中，y轴上的刻度将按照对数比例分布，而x轴则保持为普通的线性刻度。
+        # plt.semilogy(range(1, num_epochs + 1), train_loss, label='训练损失')        这行代码的作用是绘制一个图表，其中x轴表示训练轮次（从1到num_epochs），y轴表示训练损失，并且y轴使用对数刻度。
+        # plt.semilogy(range(1, num_epochs + 1), test_loss, label='测试损失')     这行代码的作用是绘制另一个图表，展示测试损失随训练轮次的变化，并且y轴也使用对数刻度。
+    plt.xlabel('周期')    #xlabel是设置x轴标签
+    plt.ylabel('损失')    #ylabel是设置y轴标签
+    #图表标题为  使用权重衰减（weight_decay=wd）的训练和测试损失曲线
+    plt.title(f'使用权重衰减（weight_decay={wd}）的训练和测试损失曲线')
+    plt.legend()    #显示图例
     plt.show()
 
     # 输出权重的L2范数
     print('w的L2范数：', net.weight.norm().item())
+
+    #.norm()是计算矩阵的Frobenius范数的函数，.item()是将张量转换为标量的函数，也就是L2范数。因为默认params=2，所以是L2范数。
+    #L1范数计算: torch.norm(net.weight, p=1).item()
 
 # 分割线
 print("-" * 50)
@@ -279,9 +323,9 @@ print("练习题解答")
 # 1. 使用不同的lambda值进行实验，绘制训练和测试精度关于lambda的函数。
 
 lambda_values = [0, 0.1, 1, 3, 5, 10]
-train_losses = []
-test_losses = []
-norms = []
+train_losses = []    #训练损失
+test_losses = []     #测试损失
+norms = []           #权重范数
 
 for lambd in lambda_values:
     # 初始化参数
@@ -304,10 +348,10 @@ for lambd in lambda_values:
     with torch.no_grad():
         train_loss = squared_loss(linreg(features_train, w, b), labels_train).mean().item()
         test_loss = squared_loss(linreg(features_test, w, b), labels_test).mean().item()
-        w_norm = torch.norm(w).item()
+        w_norm = torch.norm(w).item()    #计算权重范数
         train_losses.append(train_loss)
         test_losses.append(test_loss)
-        norms.append(w_norm)
+        norms.append(w_norm)    #记录权重范数
 
 # 绘制损失关于lambda的曲线
 plt.figure(figsize=(10, 6))
@@ -376,3 +420,5 @@ print("=" * 50)
 这些函数展示了如何在PyTorch中从零开始和使用内置函数实现权重衰减，以解决过拟合问题。
 """
 
+
+# https://www.bilibili.com/video/BV1gf4y1c7Gg
