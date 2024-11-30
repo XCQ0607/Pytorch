@@ -13,7 +13,7 @@ output_size = 10  # 输出层维度，例如10分类问题
 # 定义模型，包括输入层、隐藏层（添加了偏置项）、输出层
 class SimpleNeuralNetwork(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
-        super(SimpleNeuralNetwork, self).__init__()
+        super(SimpleNeuralNetwork, self).__init__() #调用父类的构造函数，这里显式传入self对象，并传入当前类的名称
         # 定义隐藏层，使用线性变换，添加偏置项
         self.hidden = nn.Linear(input_size, hidden_size, bias=True)
         # 定义激活函数，使用ReLU
@@ -41,7 +41,7 @@ class SimpleNeuralNetwork(nn.Module):
 
 
 # 创建模型实例
-model = SimpleNeuralNetwork(input_size, hidden_size, output_size)
+model = SimpleNeuralNetwork(input_size, hidden_size, output_size)   #
 
 # 定义损失函数，使用交叉熵损失
 criterion = nn.CrossEntropyLoss()
@@ -52,11 +52,11 @@ lambda_l2 = 0.001  # L2正则化的权重
 optimizer = optim.SGD(model.parameters(), lr=learning_rate, weight_decay=lambda_l2)
 
 # 模拟一个输入和标签
-batch_size = 64
+batch_size = 64 # 批量大小
 # 随机生成输入数据，形状为(batch_size, input_size)
 inputs = torch.randn(batch_size, input_size)
 # 随机生成标签，形状为(batch_size)
-labels = torch.randint(0, output_size, (batch_size,))
+labels = torch.randint(0, output_size, (batch_size,))   #randint函数返回一个形状为(batch_size)的张量，张量中的元素是0到output_size-1之间的随机整数
 
 # 前向传播
 outputs = model(inputs)
@@ -82,7 +82,7 @@ X = torch.randn(n, m, requires_grad=True)
 # 定义一个标量函数f
 f = torch.sum(X ** 2)
 # 计算梯度
-f.backward()
+f.backward()    #计算的偏导数，上面有requires_grad=True，计算f中的每个元素对f的偏导数
 # X的梯度维度与X相同
 print(f"X的梯度维度：{X.grad.size()}")  # 输出：torch.Size([5, 3])
 
@@ -96,11 +96,12 @@ print("练习2：添加偏置项的模型已经定义。")
 
 # 前向传播方程：
 # z = W1 * x + b1
-# h = φ(z)
+# h = φ(z)  #φ是激活函数
 # o = W2 * h + b2
-# L = l(o, y)
-# s = λ/2 * (||W1||^2 + ||W2||^2)
-# J = L + s
+# L = l(o, y)   #l是损失函数
+# s = λ/2 * (||W1||^2 + ||W2||^2)   #||w1||指的是w1的L2范数
+#s是L2正则化项，λ是正则化系数
+#J是目标函数，L是损失函数，s是L2正则化项
 
 # 反向传播方程：
 # 计算 ∂J/∂o = ∂L/∂o
@@ -117,20 +118,57 @@ print("-" * 50)
 
 print("练习3：内存占用计算")
 # 计算参数数量
-num_params = sum(p.numel() for p in model.parameters())
+num_params = sum(p.numel() for p in model.parameters()) #p.numel()返回参数p中的元素个数,model.parameters()返回模型中的所有参数
 print(f"模型参数总数：{num_params}")
 
 # 计算训练时的内存占用（参数 + 中间激活值）
 # 假设每个参数和激活值都是32位浮点数（4字节）
 memory_params = num_params * 4 / (1024 ** 2)  # 转换为MB
 # 中间激活值包括z、h、o，大小与相应的层输出维度有关
-memory_activations = batch_size * (hidden_size + hidden_size + output_size) * 4 / (1024 ** 2)
+memory_activations = batch_size * (hidden_size + hidden_size + output_size) * 4 / (1024 ** 2)   #其实上面只有一个隐藏层
 total_memory_training = memory_params + memory_activations
 print(f"训练时内存占用约为：{total_memory_training:.2f} MB")
+
+#两个隐藏层写法：
+# class SimpleNeuralNetwork(nn.Module):
+#     def __init__(self, input_size, hidden_size, output_size):
+#         super(SimpleNeuralNetwork, self).__init__()
+#         # 定义第一个隐藏层
+#         self.hidden1 = nn.Linear(input_size, hidden_size, bias=True)
+#         # 定义激活函数
+#         self.activation1 = nn.ReLU()
+#         # 定义第二个隐藏层
+#         self.hidden2 = nn.Linear(hidden_size, hidden_size, bias=True)
+#         # 定义激活函数
+#         self.activation2 = nn.ReLU()
+#         # 定义输出层
+#         self.output = nn.Linear(hidden_size, output_size, bias=True)
+#     def forward(self, x):
+#         # 前向传播通过第一个隐藏层
+#         x = self.activation1(self.hidden1(x))
+#         # 前向传播通过第二个隐藏层
+#         x = self.activation2(self.hidden2(x))
+#         # 前向传播通过输出层
+#         output = self.output(x)
+#         return output
+
+# 你可以根据需要扩展你的神经网络模型，添加更多的隐藏层。但是，你需要注意以下几点：
+# 性能考虑：随着隐藏层数量的增加，模型的复杂性和计算需求也会增加。这可能导致训练时间变长，并且需要更多的计算资源。
+# 梯度消失/爆炸：在深度神经网络中，随着层数的增加，梯度在反向传播过程中可能会逐渐消失（变得非常小）或爆炸（变得非常大），这会影响模型的训练效果。为了解决这个问题，可能需要使用特殊的初始化方法、激活函数（如ReLU、LeakyReLU等）或优化技术（如梯度裁剪、残差连接等）。
+# 过拟合风险：增加模型的复杂性（如添加更多的隐藏层）可能会增加过拟合的风险，即模型在训练数据上表现良好，但在测试数据上表现不佳。为了缓解过拟合，可以使用正则化技术（如L1/L2正则化、dropout等）或增加训练数据量。
+
+# batch_size 是指每批次处理的数据样本数量。
+# hidden_size 通常代表隐藏层的单元数或神经元的数量。在这个表达式中，它出现了两次，这可能意味着在计算中有两个隐藏层，且这两个隐藏层的大小（即神经元的数量）是相同的。当然，具体是否如此需要查看完整的网络结构和上下文来确定。
+# output_size 是指输出层的单元数或神经元的数量。
+# 将这些值相加 (hidden_size + hidden_size + output_size)，我们得到了一个批次中所有样本在所有相关层（在这里是两个隐藏层和一个输出层）中的激活值总数。然后，乘以 batch_size，我们得到了一批数据中所有激活值的总数。
 
 # 预测时不需要存储梯度，中间激活值也可能不需要全部保留
 total_memory_inference = memory_params
 print(f"预测时内存占用约为：{total_memory_inference:.2f} MB")
+# 模型预测时内存占用等于模型参数总数乘以4除以1024^2的原因在于，预测时主要关注的是模型参数本身所占用的内存，而不需要额外存储如梯度或中间激活值等其他信息。这里的计算方式是基于以下假设：
+# 参数存储：模型参数在预测时是需要被加载到内存中的。这些参数通常是浮点数，且在这个背景知识中被假设为32位浮点数，即每个参数占用4字节（32位 = 4字节）的内存空间。
+# 内存计算：为了将参数的内存占用从字节转换为更常用的单位MB（兆字节），我们需要进行单位转换。由于1MB等于1024^2字节（即1MB = 1024KB = 1024 * 1024字节），因此我们通过乘以4（每个参数的字节数）然后除以1024^2来进行转换。
+
 
 # 打印分割线
 print("-" * 50)
@@ -143,11 +181,13 @@ print("练习4：计算二阶导数")
 
 # 示例：计算参数的二阶导数
 loss = criterion(model(inputs), labels)
-first_grad = torch.autograd.grad(loss, model.parameters(), create_graph=True)
+first_grad = torch.autograd.grad(loss, model.parameters(), create_graph=True)   #torch.autograd.grad用于计算梯度，create_graph=True表示构建用于计算高阶导数的计算图
+# torch.autograd.grad 和 torch.grad 实际上在 PyTorch 中指的是同一个函数，它们没有区别。torch.grad 是 torch.autograd.grad 的别名，两者都用于自动计算梯度。
 # 计算二阶导数
 second_grad = []
 for grad in first_grad:
-    grad2 = torch.autograd.grad(grad.sum(), model.parameters(), retain_graph=True)
+    grad2 = torch.autograd.grad(grad.sum(), model.parameters(), retain_graph=True)  #计算gard.sum()对model.parameters()的梯度，retain_graph=True表示保留计算图，以便多次使用
+    #model.parameters()实际上是一个生成器，每次调用都会返回一个新的参数，因此需要使用for循环来遍历所有的参数
     second_grad.append(grad2)
 
 print("已计算二阶导数。由于需要保留计算图，计算时间和内存占用显著增加。")
@@ -182,7 +222,8 @@ if torch.cuda.device_count() > 1:
 
     print("已在多个GPU上完成一次前向和反向传播。")
 else:
-    print("GPU数量不足，无法演示多GPU并行。")
+    if torch.cuda.device_count() <= 1:
+        print("GPU数量不足，无法演示多GPU并行。")
 
 # 优点：可以处理更大的模型和批量，减轻单个GPU的内存压力。
 # 缺点：需要在GPU之间传输数据，增加了通信开销，可能降低计算效率。
@@ -194,16 +235,16 @@ print("-" * 50)
 print("总结：在本示例中，我们构建了一个包含偏置项的单隐藏层神经网络，并演示了前向传播和反向传播的过程。我们还回答了练习中的问题，包括计算梯度维度、推导方程、计算内存占用、讨论二阶导数对计算图的影响，以及如何在多GPU环境下进行模型并行。")
 
 
-在以上代码示例中，我们使用了以下主要函数和类：
-
-torch.nn.Module：所有神经网络模块的基类。自定义的神经网络需要继承它。
-参数：
-self：实例本身。
-示例：
-class SimpleNeuralNetwork(nn.Module):
-    def __init__(self, ...):
-        super(SimpleNeuralNetwork, self).__init__()
-        ...
+# 在以上代码示例中，我们使用了以下主要函数和类：
+#
+# torch.nn.Module：所有神经网络模块的基类。自定义的神经网络需要继承它。
+# 参数：
+# self：实例本身。
+# 示例：
+# class SimpleNeuralNetwork(nn.Module):
+#     def __init__(self, ...):
+#         super(SimpleNeuralNetwork, self).__init__()
+#         ...
 
 # torch.nn.Linear：用于设置全连接层的模块。
 # 参数：

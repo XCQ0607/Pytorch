@@ -4,11 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63abe224-d803-44d3-91b3-04eb4e8d8c7f" name="更改" comment="2024-11-21 23:11">
-      <change afterPath="$PROJECT_DIR$/4.7 Forward propagation, backward propagation and computational graphs.py" afterDir="false" />
+    <list default="true" id="63abe224-d803-44d3-91b3-04eb4e8d8c7f" name="更改" comment="2024-11-24 0:13">
+      <change afterPath="$PROJECT_DIR$/4.10 Kaggle  Predicting House Prices.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/4.8 Numerical stability and model initialization.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/4.9 Environment and Distribution Offset.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/4.9 improved.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/5.1 Layers and blocks.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/5.2 parameter management.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/4.5 weight decay.py" beforeDir="false" afterPath="$PROJECT_DIR$/4.5 weight decay.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dropout.py" beforeDir="false" afterPath="$PROJECT_DIR$/4.6 Dropout.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/4.6 Dropout.py" beforeDir="false" afterPath="$PROJECT_DIR$/4.6 Dropout.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/4.7 Forward propagation, backward propagation and computational graphs.py" beforeDir="false" afterPath="$PROJECT_DIR$/4.7 Forward propagation, backward propagation and computational graphs.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,12 +74,16 @@
     "Python.3.6 softmax regression from zero implementation.executor": "Run",
     "Python.3.7 Simple implementation of softmax regression.executor": "Run",
     "Python.4.1 multilayer perceptron.executor": "Run",
+    "Python.4.10 Kaggle  Predicting House Prices.executor": "Run",
     "Python.4.2 Implementation of multilayer perceptron from scratch.executor": "Run",
     "Python.4.3 Concise Implementation of Multilayer Perceptron.executor": "Run",
     "Python.4.4 Model Selection, Underfitting, and Overfitting.executor": "Run",
     "Python.4.5 weight decay.executor": "Run",
     "Python.4.5..executor": "Run",
     "Python.4.7 Forward propagation, backward propagation and computational graphs.executor": "Run",
+    "Python.4.8 Numerical stability and model initialization.executor": "Run",
+    "Python.4.9 Environment and Distribution Offset.executor": "Run",
+    "Python.5.1 Layers and blocks.executor": "Run",
     "Python.Dropout.executor": "Run",
     "Python.demo.executor": "Run",
     "Python.tensorboard.executor": "Run",
@@ -83,13 +92,13 @@
     "RunOnceActivity.git.unshallow": "true",
     "com.codeium.enabled": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "E:/PycharmProjects/Pytorch",
+    "last_opened_file_path": "D:/A/IDM/Compressed/intellij-micropython-1.4.6-2024.2.zip",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.keymap",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -176,7 +185,16 @@
       <workItem from="1732118945277" duration="169000" />
       <workItem from="1732196999645" duration="4023000" />
       <workItem from="1732287957111" duration="1836000" />
-      <workItem from="1732365160658" duration="3798000" />
+      <workItem from="1732365160658" duration="4475000" />
+      <workItem from="1732415879856" duration="1849000" />
+      <workItem from="1732519080616" duration="9000" />
+      <workItem from="1732545696660" duration="1000000" />
+      <workItem from="1732695104483" duration="3348000" />
+      <workItem from="1732698472209" duration="4998000" />
+      <workItem from="1732865645197" duration="9811000" />
+      <workItem from="1732886169365" duration="419000" />
+      <workItem from="1732886611741" duration="1105000" />
+      <workItem from="1732979126758" duration="4497000" />
     </task>
     <task id="LOCAL-00001" summary="2024-11-5 19:20">
       <option name="closed" value="true" />
@@ -282,7 +300,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732201887271</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="2024-11-24 0:13">
+      <option name="closed" value="true" />
+      <created>1732378413322</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1732378413322</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -325,7 +351,8 @@
     <MESSAGE value="2024-11-19 00:03" />
     <MESSAGE value="2024-11-21 0:12" />
     <MESSAGE value="2024-11-21 23:11" />
-    <option name="LAST_COMMIT_MESSAGE" value="2024-11-21 23:11" />
+    <MESSAGE value="2024-11-24 0:13" />
+    <option name="LAST_COMMIT_MESSAGE" value="2024-11-24 0:13" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Pytorch$3_7_Simple_implementation_of_softmax_regression.coverage" NAME="3.7 Simple implementation of softmax regression 覆盖结果" MODIFIED="1731722802093" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -334,24 +361,28 @@
     <SUITE FILE_PATH="coverage/Pytorch$demo.coverage" NAME="demo 覆盖结果" MODIFIED="1730537270156" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$3_6_softmax_regression_from_zero_implementation.coverage" NAME="3.6 softmax regression from zero implementation 覆盖结果" MODIFIED="1731718880595" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$4_3_Concise_Implementation_of_Multilayer_Perceptron.coverage" NAME="4.3 Concise Implementation of Multilayer Perceptron 覆盖结果" MODIFIED="1731942653076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Pytorch$4_7_Forward_propagation__backward_propagation_and_computational_graphs.coverage" NAME="4.7 Forward propagation, backward propagation and computational graphs 覆盖结果" MODIFIED="1732376235296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Pytorch$4_7_Forward_propagation__backward_propagation_and_computational_graphs.coverage" NAME="4.7 Forward propagation, backward propagation and computational graphs 覆盖结果" MODIFIED="1732697676206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$3_3_Simple_Implementation_of_Linear_Regression.coverage" NAME="3.3 Simple Implementation of Linear Regression 覆盖结果" MODIFIED="1731580087445" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$4_5_.coverage" NAME="4.5. 覆盖结果" MODIFIED="1732118900441" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Pytorch$111.coverage" NAME="111 覆盖结果" MODIFIED="1730538912949" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$tensorboard_demo.coverage" NAME="tensorboard_demo 覆盖结果" MODIFIED="1730802228869" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/1" />
+    <SUITE FILE_PATH="coverage/Pytorch$111.coverage" NAME="111 覆盖结果" MODIFIED="1732874704675" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$3_5_image_classification_datasets.coverage" NAME="3.5 image classification datasets 覆盖结果" MODIFIED="1731686089097" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$4_4_Model_Selection__Underfitting__and_Overfitting.coverage" NAME="4.4 Model Selection, Underfitting, and Overfitting 覆盖结果" MODIFIED="1732115706983" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Pytorch$4_8_Numerical_stability_and_model_initialization.coverage" NAME="4.8 Numerical stability and model initialization 覆盖结果" MODIFIED="1732866725955" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$2_5_automatic_differentiation.coverage" NAME="2.5 automatic differentiation 覆盖结果" MODIFIED="1731169454512" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$tensorboard.coverage" NAME="tensorboard 覆盖结果" MODIFIED="1730538251383" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$3_2_Zero_Start_Realization_of_Linear_Regression.coverage" NAME="3.2 Zero-Start Realization of Linear Regression 覆盖结果" MODIFIED="1731574006378" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$2_1_data_process.coverage" NAME="2.1_data_process 覆盖结果" MODIFIED="1730888559233" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$Doctests___base__.coverage" NAME="Doctests (_base 内) 覆盖结果" MODIFIED="1731572809921" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="D:/miniconda3/envs/Pytorch/Lib/site-packages/matplotlib/axes" />
+    <SUITE FILE_PATH="coverage/Pytorch$4_10_Kaggle__Predicting_House_Prices.coverage" NAME="4.10 Kaggle  Predicting House Prices 覆盖结果" MODIFIED="1732982719680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Pytorch$5_1_Layers_and_blocks.coverage" NAME="5.1 Layers and blocks 覆盖结果" MODIFIED="1732983530579" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$2_7_consult_the_documentation.coverage" NAME="2.7 consult the documentation 覆盖结果" MODIFIED="1731423762602" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$3_1_linear_regression.coverage" NAME="3.1 linear regression 覆盖结果" MODIFIED="1731547351412" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$4_1_multilayer_perceptron.coverage" NAME="4.1 multilayer perceptron 覆盖结果" MODIFIED="1731772086049" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$2_3_linear_algebra.coverage" NAME="2.3 linear algebra 覆盖结果" MODIFIED="1731079781654" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$2_2_data_pre_processing.coverage" NAME="2.2 data pre-processing 覆盖结果" MODIFIED="1730986536786" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$3_4_softmax_regression.coverage" NAME="3.4 softmax regression 覆盖结果" MODIFIED="1731597595025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Pytorch$4_9_Environment_and_Distribution_Offset.coverage" NAME="4.9 Environment and Distribution Offset 覆盖结果" MODIFIED="1732871600110" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$4_2_Implementation_of_multilayer_perceptron_from_scratch.coverage" NAME="4.2 Implementation of multilayer perceptron from scratch 覆盖结果" MODIFIED="1731940087364" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$Dropout.coverage" NAME="Dropout 覆盖结果" MODIFIED="1732201742956" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$4_5_weight_decay.coverage" NAME="4.5 weight decay 覆盖结果" MODIFIED="1732365429951" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

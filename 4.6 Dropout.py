@@ -3,7 +3,7 @@ print("4.6. 暂退法（Dropout）")
 
 import torch
 from torch import nn
-import torch.nn.functional as F
+import torch.nn.functional as F # 导入 PyTorch 的函数库
 import matplotlib.pyplot as plt
 
 # ------------------------ 分割线 ------------------------
@@ -19,18 +19,18 @@ def dropout_layer(X, dropout):
     - 输出张量，应用了暂退法
     """
     assert 0 <= dropout <= 1, "dropout 概率必须在0到1之间"
-    if dropout == 0:
+    if dropout == 0:    #dropout表示抛弃率
         return X
     elif dropout == 1:
         return torch.zeros_like(X)
     else:
         # 生成与X同形状的掩码矩阵
-        mask = (torch.rand(X.shape) > dropout).float()
-        return mask * X / (1.0 - dropout)
+        mask = (torch.rand(X.shape) > dropout).float()  #输出0/1矩阵，1表示保留，0表示丢弃
+        return mask * X / (1.0 - dropout)   # 应用掩码矩阵，并进行缩放
 
 # 测试 dropout_layer 函数
 print("\ndropout_layer 函数示例：")
-X = torch.arange(16, dtype=torch.float32).reshape((2, 8))
+X = torch.arange(16, dtype=torch.float32).reshape((2, 8))   # 生成一个形状为(2, 8)的张量，并将其值设置为0到15
 print("输入张量 X：\n", X)
 
 print("\n暂退概率为 0：")
