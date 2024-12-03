@@ -23,7 +23,7 @@ class SimpleMLP(nn.Module):
 net = SimpleMLP()
 
 # 生成随机输入
-X = torch.rand(2, 4)
+X = torch.rand(2, 4)    # 2 个样本，每个样本 4 维度
 print("输入X：", X)
 
 # 执行前向传播
@@ -39,14 +39,28 @@ for name, param in net.named_parameters():
 
 # 访问特定层的参数
 print("\n访问特定层的参数：")
-print("隐藏层权重：", net.hidden.weight)
-print("隐藏层偏置：", net.hidden.bias)
+print("隐藏层权重：", net.hidden.weight)  #shape: (8, 4)
+print("隐藏层偏置：", net.hidden.bias)    #shape: (8,)
+
+"""
+在PyTorch中，nn.Linear 是一个线性层，它接受一个输入张量，应用一个线性变换，然后（可选地）添加一个偏置项。这个线性变换是通过矩阵乘法实现的，因此线性层的权重（weight）和偏置（bias）的形状是由输入和输出特征的数量决定的。
+对于你给出的 SimpleMLP 类中的隐藏层 self.hidden = nn.Linear(4, 8)：
+输入维度是 4，这意味着输入张量的最后一个维度的大小应该是 4。
+输出维度是 8，这意味着线性层将输出一个大小为 8 的张量。
+现在，让我们来看看权重和偏置的形状是如何确定的：
+隐藏层权重（net.hidden.weight）：
+权重矩阵的形状是 (输出维度, 输入维度)，即 (8, 4)。
+这是因为权重矩阵的每一行对应于输出维度中的一个神经元，每一列对应于输入维度中的一个特征。所以，为了从 4 维输入映射到 8 维输出，我们需要一个 8x4 的矩阵。
+隐藏层偏置（net.hidden.bias）：
+偏置向量的形状是 (输出维度,)，即 (8,)。
+偏置项是为每个输出神经元单独添加的，因此偏置向量的长度等于输出维度的大小。在这个例子中，输出维度是 8，所以偏置向量有 8 个元素。
+"""
 
 # --------------------------------------------------
 # 一次性访问所有参数
 
 print("\n一次性访问所有参数：")
-params = list(net.parameters())
+params = list(net.parameters()) # 返回一个包含所有参数的列表
 for i, param in enumerate(params):
     print(f"参数 {i}: 形状 {param.shape}")
 
@@ -72,7 +86,7 @@ def block2():
 
 class NestedMLP(nn.Module):
     def __init__(self):
-        super(NestedMLP, self).__init__()
+        super(NestedMLP, self).__init__()    # 调用父类的构造函数
         self.net = nn.Sequential(
             block2(),
             nn.Linear(4, 1)
@@ -80,9 +94,9 @@ class NestedMLP(nn.Module):
 
     def forward(self, X):
         return self.net(X)
-
-nested_net = NestedMLP()
-output = nested_net(X)
+# X = torch.rand(2, 4)
+nested_net = NestedMLP()    # 实例化嵌套网络
+output = nested_net(X)  #shape: (2, 1)  #输出特征是1.样本数量是2
 print("嵌套网络输出：", output)
 
 print("\n嵌套网络的参数：")
@@ -115,6 +129,13 @@ class CustomInit(nn.Module):
             print(f"正在初始化层：{m}")
             nn.init.uniform_(m.weight, a=-10, b=10)
             m.weight.data *= (torch.abs(m.weight.data) >= 5)
+
+            # (torch.abs(m.weight.data) >= 5)：这个表达式创建了一个与权重张量形状相同的布尔型张量（Boolean
+            # Tensor），其中每个元素根据条件torch.abs(m.weight.data) >= 5
+            # 被设置为True或False。如果权重张量中某个元素的绝对值大于等于5，则对应位置的布尔值为True，否则为False。
+            #
+            # m.weight.data *= (torch.abs(m.weight.data) >= 5)：最后，这行代码将权重张量中的每个元素与其对应的布尔值相乘。由于布尔值在PyTorch中被视为0（False）或1（True），因此这个操作实际上是将权重张量中绝对值小于5的元素乘以0（即置为0），而绝对值大于等于5的元素保持不变。
+
             nn.init.zeros_(m.bias)
 
 net.apply(CustomInit())
@@ -126,14 +147,14 @@ print("自定义初始化后的隐藏层权重：", net.hidden.weight)
 print("\n参数绑定（共享参数）：")
 
 # 定义共享层
-shared_layer = nn.Linear(8, 8)
+shared_layer = nn.Linear(8, 8)  # 共享层
 
 # 定义使用共享参数的网络
 class SharedParamsNet(nn.Module):
     def __init__(self):
         super(SharedParamsNet, self).__init__()
         self.layer1 = nn.Linear(4, 8)
-        self.shared1 = shared_layer
+        self.shared1 = shared_layer  # 共享参数
         self.layer2 = nn.Linear(8, 8)
         self.shared2 = shared_layer  # 共享参数
         self.output = nn.Linear(8, 1)
