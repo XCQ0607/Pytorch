@@ -100,7 +100,7 @@ def try_gpu(i=0):
       torch.device对象，表示可用设备。
     """
     if torch.cuda.is_available() and i < torch.cuda.device_count():
-        return torch.device(f'cuda:{i}')
+            return torch.device(f'cuda:{i}')
     return torch.device('cpu')
 
 def try_all_gpus():
@@ -112,7 +112,7 @@ def try_all_gpus():
         return [torch.device(f'cuda:{i}') for i in range(torch.cuda.device_count())]
     return [torch.device('cpu')]
 
-cpu_device = torch.device('cpu')
+cpu_device = torch.device('cpu')    # 定义CPU设备
 gpu0 = try_gpu(0)
 gpu1 = try_gpu(1)
 all_gpus = try_all_gpus()
@@ -184,7 +184,8 @@ def benchmark_matrix_multiplication(device, num_trials=10, matrix_size=(1000,100
     B = torch.randn(matrix_size, device=device)
     # 预热(让GPU先运行一次不计时，避免初次调用慢)
     _ = torch.mm(A, B)
-    torch.cuda.synchronize() if device.type == 'cuda' else None
+    torch.cuda.synchronize() if device.type == 'cuda' else None # 确保所有GPU操作完成后再计时，这里的device是torch.device类型
+    #torch.cuda.synchronize()是一个PyTorch函数，它的作用是阻塞当前线程，直到所有之前的CUDA操作完成。这在某些情况下非常有用，比如当你想要确保所有的GPU操作都已完成，然后再进行下一步操作（比如计时或进行下一步计算）时。
 
     start = time.time()
     for _ in range(num_trials):
@@ -210,20 +211,20 @@ print("="*60)
 
 # 定义一个简单的线性模型
 model = nn.Linear(100, 10)  # 100维输入 -> 10维输出
-print("模型参数初始化设备:", next(model.parameters()).device)
+print("模型参数初始化设备:", next(model.parameters()).device)    #next(model.parameters())返回的是一个迭代器，迭代器中的第一个元素是模型的第一个参数，即权重矩阵W,第二个参数是偏置向量b。
 
 # 将模型放到GPU上(如果有GPU)
-model = model.to(gpu0 if torch.cuda.is_available() else cpu_device)
+model = model.to(gpu0 if torch.cuda.is_available() else cpu_device)  # 移动模型到GPU
 print("模型已移动到:", next(model.parameters()).device)
 
 # 模拟保存与加载模型参数
-model_path = "temp_model.pth"
+model_path = ".data/temp_model.pth"
 torch.save(model.state_dict(), model_path)  # 保存参数到文件
 print("模型参数已保存到文件:", model_path)
 
 # 加载参数到CPU
 model_loaded = nn.Linear(100, 10)
-model_loaded.load_state_dict(torch.load(model_path, map_location='cpu'))
+model_loaded.load_state_dict(torch.load(model_path, map_location='cpu'))    #map_location='cpu'表示将模型加载到CPU上
 print("加载到CPU后的模型参数设备:", next(model_loaded.parameters()).device)
 
 # 将加载后的模型移动回GPU(如可用)
@@ -233,7 +234,7 @@ if torch.cuda.is_available():
 
 # ------------------------------------------------------------
 print("\n" + "="*60)
-print("演示6: 计算1000个100x100矩阵乘法的时间与Frobenius范数")
+print("演示6: 计算1000个100x100矩阵乘法的时间与Frobenius范数") #范数是第二范数
 print("="*60)
 
 def compute_1000_matmul_and_log(device):
@@ -244,7 +245,7 @@ def compute_1000_matmul_and_log(device):
     """
     # 创建数据
     X = torch.randn((100, 100), device=device)
-    norms = []
+    norms = []  # 用于存储范数的列表
     torch.cuda.synchronize() if device.type == 'cuda' else None
     start = time.time()
     for i in range(1000):
