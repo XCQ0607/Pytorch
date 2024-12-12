@@ -31,12 +31,51 @@ def corr2d(X, K):
                           其中 H_out = H_in - H_k + 1
                                W_out = W_in - W_k + 1
     """
-    h, w = K.shape
-    Y = torch.zeros((X.shape[0] - h + 1, X.shape[1] - w + 1))
+    h, w = K.shape  # 获取卷积核的高度和宽度
+    Y = torch.zeros((X.shape[0] - h + 1, X.shape[1] - w + 1))   # 初始化输出张量
     for i in range(Y.shape[0]):
         for j in range(Y.shape[1]):
-            Y[i, j] = (X[i:i + h, j:j + w] * K).sum()
+            Y[i, j] = (X[i:i + h, j:j + w] * K).sum()    # 逐元素相乘并求和
     return Y
+
+"""
+二维互相关运算（或称卷积运算），它在计算机视觉领域中广泛用于处理图像数据。在这个函数中，X 是输入的二维张量（例如一张图像），K 是卷积核（滤波器），而输出是一个新的二维张量 Y，通常称为特征图或输出图像。
+
+互相关运算流程：
+输入和卷积核： 输入张量 X 和卷积核 K 都是二维的。卷积核通常比输入张量小，且我们将卷积核移动到输入图像的每个位置，并计算它们之间的逐元素乘积求和。
+计算输出： 输出张量的每个元素是卷积核与输入张量相应区域逐元素相乘后求和的结果。
+示例：
+我们可以通过一个简单的例子来演示这个过程。
+假设我们有以下输入张量 X 和卷积核 K：
+import torch
+X = torch.tensor([[1, 2, 3],
+                  [4, 5, 6],
+                  [7, 8, 9]], dtype=torch.float32)
+K = torch.tensor([[1, 0],
+                  [0, -1]], dtype=torch.float32)
+输入张量 X 是一个 3x3 的矩阵（类似一个小图像）。
+卷积核 K 是一个 2x2 的矩阵，它将被滑动并与 X 进行逐元素相乘。
+计算过程：
+假设我们从输入张量的左上角开始，卷积核的左上角与输入的对应区域对齐，进行逐元素相乘并求和：
+对于 Y[0,0]，卷积核覆盖的区域是 X[0:2, 0:2]：
+[[1, 2],
+ [4, 5]]
+对应的逐元素相乘：
+(1 * 1) + (2 * 0) + (4 * 0) + (5 * -1) = 1 + 0 + 0 - 5 = -4
+所以，Y[0, 0] 的值为 -4。
+对于 Y[0,1]，卷积核覆盖的区域是 X[0:2, 1:3]：
+[[2, 3],
+ [5, 6]]
+逐元素相乘：
+(2 * 1) + (3 * 0) + (5 * 0) + (6 * -1) = 2 + 0 + 0 - 6 = -4
+所以，Y[0, 1] 的值为 -4。
+
+以此类推，整个输出 Y 的计算过程如下：
+输出 Y：
+Y =
+[[-4, -4],
+ [ 4,  4]]
+"""
 
 class Conv2D(nn.Module):
     """
@@ -46,10 +85,10 @@ class Conv2D(nn.Module):
         use_bias (bool): 是否使用偏置项, 默认为True
     """
     def __init__(self, kernel_size, use_bias=True):
-        super().__init__()
-        self.weight = nn.Parameter(torch.randn(kernel_size))
+        super().__init__()  # 调用父类的初始化方法，会初始化父类nn.Module的参数--weight,bias  etc.
+        self.weight = nn.Parameter(torch.randn(kernel_size))    # 初始化卷积核为随机值
         if use_bias:
-            self.bias = nn.Parameter(torch.zeros(1))
+            self.bias = nn.Parameter(torch.zeros(1))     # 初始化偏置项为0,nn.Parameter将其转换为可学习的参数
         else:
             self.bias = None
 
@@ -59,7 +98,7 @@ class Conv2D(nn.Module):
         x的shape: (H_in, W_in)，单通道情况
         返回: (H_out, W_out)
         """
-        Y = corr2d(x, self.weight)
+        Y = corr2d(x, self.weight)  # 调用corr2d函数进行卷积运算
         if self.bias is not None:
             Y = Y + self.bias
         return Y
@@ -85,7 +124,7 @@ print("\n" + "="*60)
 print("【构建简单卷积层示例】")
 print("使用Conv2D类进行演示:")
 
-conv2d_layer = Conv2D(kernel_size=(2,2))
+conv2d_layer = Conv2D(kernel_size=(2,2))    # 初始化卷积层
 print("随机初始化的卷积核参数:\n", conv2d_layer.weight.data)
 if conv2d_layer.bias is not None:
     print("随机初始化的偏置参数:\n", conv2d_layer.bias.data)
@@ -126,17 +165,17 @@ print("我们希望通过随机初始化的卷积核来学习使得X_edge -> Y_e
 X_edge_4d = X_edge.unsqueeze(0).unsqueeze(0)  # (1,1,6,8)
 Y_edge_4d = Y_edge.unsqueeze(0).unsqueeze(0)  # (1,1,6,7)
 
-conv2d_learn = nn.Conv2d(in_channels=1, out_channels=1, kernel_size=(1,2), bias=False)
+conv2d_learn = nn.Conv2d(in_channels=1, out_channels=1, kernel_size=(1,2), bias=False)  # 卷积核大小为(1,2)
 
 # 学习率
 lr = 3e-2
 for i in range(10):
     Y_hat = conv2d_learn(X_edge_4d)
-    l = (Y_hat - Y_edge_4d)**2
-    conv2d_learn.zero_grad()
-    l.sum().backward()
+    l = (Y_hat - Y_edge_4d)**2  # 均方误差
+    conv2d_learn.zero_grad()    # 梯度清零
+    l.sum().backward()  # 反向传播
     # 更新参数
-    conv2d_learn.weight.data -= lr * conv2d_learn.weight.grad
+    conv2d_learn.weight.data -= lr * conv2d_learn.weight.grad    # 更新卷积核参数
     if (i+1) % 2 == 0:
         print(f"epoch {i+1}, loss {l.sum().item():.3f}")
 

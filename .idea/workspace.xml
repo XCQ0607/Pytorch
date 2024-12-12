@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63abe224-d803-44d3-91b3-04eb4e8d8c7f" name="更改" comment="2024-12-10 0:06">
-      <change afterPath="$PROJECT_DIR$/6.2 image convolution.py" afterDir="false" />
+    <list default="true" id="63abe224-d803-44d3-91b3-04eb4e8d8c7f" name="更改" comment="2024-12-10 23:53">
+      <change afterPath="$PROJECT_DIR$/6.3 padding and stride.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/6.4 multiple-input multiple-output channel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/5.6 GPU.py" beforeDir="false" afterPath="$PROJECT_DIR$/5.6 GPU.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/6.1 From fully connected layers to convolutions.py" beforeDir="false" afterPath="$PROJECT_DIR$/6.1 From fully connected layers to convolutions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/6.2 image convolution.py" beforeDir="false" afterPath="$PROJECT_DIR$/6.2 image convolution.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,60 +50,62 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JavaScript 调试.localhost:6006.executor&quot;: &quot;Run&quot;,
-    &quot;Python 测试.Doctests (_base 内).executor&quot;: &quot;Run&quot;,
-    &quot;Python.111.executor&quot;: &quot;Run&quot;,
-    &quot;Python.2.1_data_process.executor&quot;: &quot;Run&quot;,
-    &quot;Python.2.2 data pre-processing.executor&quot;: &quot;Run&quot;,
-    &quot;Python.2.3 linear algebra.executor&quot;: &quot;Run&quot;,
-    &quot;Python.2.4 calculus.executor&quot;: &quot;Run&quot;,
-    &quot;Python.2.5 automatic differentiation.executor&quot;: &quot;Run&quot;,
-    &quot;Python.2.6 probability.executor&quot;: &quot;Run&quot;,
-    &quot;Python.2.7 consult the documentation.executor&quot;: &quot;Run&quot;,
-    &quot;Python.3.1 linear regression.executor&quot;: &quot;Run&quot;,
-    &quot;Python.3.2 Zero-Start Realization of Linear Regression.executor&quot;: &quot;Run&quot;,
-    &quot;Python.3.3 Simple Implementation of Linear Regression.executor&quot;: &quot;Run&quot;,
-    &quot;Python.3.4 softmax regression.executor&quot;: &quot;Run&quot;,
-    &quot;Python.3.5 image classification datasets.executor&quot;: &quot;Run&quot;,
-    &quot;Python.3.6 softmax regression from zero implementation.executor&quot;: &quot;Run&quot;,
-    &quot;Python.3.7 Simple implementation of softmax regression.executor&quot;: &quot;Run&quot;,
-    &quot;Python.4.1 multilayer perceptron.executor&quot;: &quot;Run&quot;,
-    &quot;Python.4.10 Kaggle  Predicting House Prices.executor&quot;: &quot;Run&quot;,
-    &quot;Python.4.2 Implementation of multilayer perceptron from scratch.executor&quot;: &quot;Run&quot;,
-    &quot;Python.4.3 Concise Implementation of Multilayer Perceptron.executor&quot;: &quot;Run&quot;,
-    &quot;Python.4.4 Model Selection, Underfitting, and Overfitting.executor&quot;: &quot;Run&quot;,
-    &quot;Python.4.5 weight decay.executor&quot;: &quot;Run&quot;,
-    &quot;Python.4.5..executor&quot;: &quot;Run&quot;,
-    &quot;Python.4.7 Forward propagation, backward propagation and computational graphs.executor&quot;: &quot;Run&quot;,
-    &quot;Python.4.8 Numerical stability and model initialization.executor&quot;: &quot;Run&quot;,
-    &quot;Python.4.9 Environment and Distribution Offset.executor&quot;: &quot;Run&quot;,
-    &quot;Python.5.1 Layers and blocks.executor&quot;: &quot;Run&quot;,
-    &quot;Python.5.2 parameter management.executor&quot;: &quot;Run&quot;,
-    &quot;Python.5.3 deferred initialization.executor&quot;: &quot;Run&quot;,
-    &quot;Python.5.4 custom layers.executor&quot;: &quot;Run&quot;,
-    &quot;Python.5.5 read and write files.executor&quot;: &quot;Run&quot;,
-    &quot;Python.5.6 GPU.executor&quot;: &quot;Run&quot;,
-    &quot;Python.6.1 From fully connected layers to convolutions.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Dropout.executor&quot;: &quot;Run&quot;,
-    &quot;Python.demo.executor&quot;: &quot;Run&quot;,
-    &quot;Python.tensorboard.executor&quot;: &quot;Run&quot;,
-    &quot;Python.tensorboard_demo.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/A/IDM/Compressed/intellij-micropython-1.4.6-2024.2.zip&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JavaScript 调试.localhost:6006.executor": "Run",
+    "Python 测试.Doctests (_base 内).executor": "Run",
+    "Python.111.executor": "Run",
+    "Python.2.1_data_process.executor": "Run",
+    "Python.2.2 data pre-processing.executor": "Run",
+    "Python.2.3 linear algebra.executor": "Run",
+    "Python.2.4 calculus.executor": "Run",
+    "Python.2.5 automatic differentiation.executor": "Run",
+    "Python.2.6 probability.executor": "Run",
+    "Python.2.7 consult the documentation.executor": "Run",
+    "Python.3.1 linear regression.executor": "Run",
+    "Python.3.2 Zero-Start Realization of Linear Regression.executor": "Run",
+    "Python.3.3 Simple Implementation of Linear Regression.executor": "Run",
+    "Python.3.4 softmax regression.executor": "Run",
+    "Python.3.5 image classification datasets.executor": "Run",
+    "Python.3.6 softmax regression from zero implementation.executor": "Run",
+    "Python.3.7 Simple implementation of softmax regression.executor": "Run",
+    "Python.4.1 multilayer perceptron.executor": "Run",
+    "Python.4.10 Kaggle  Predicting House Prices.executor": "Run",
+    "Python.4.2 Implementation of multilayer perceptron from scratch.executor": "Run",
+    "Python.4.3 Concise Implementation of Multilayer Perceptron.executor": "Run",
+    "Python.4.4 Model Selection, Underfitting, and Overfitting.executor": "Run",
+    "Python.4.5 weight decay.executor": "Run",
+    "Python.4.5..executor": "Run",
+    "Python.4.7 Forward propagation, backward propagation and computational graphs.executor": "Run",
+    "Python.4.8 Numerical stability and model initialization.executor": "Run",
+    "Python.4.9 Environment and Distribution Offset.executor": "Run",
+    "Python.5.1 Layers and blocks.executor": "Run",
+    "Python.5.2 parameter management.executor": "Run",
+    "Python.5.3 deferred initialization.executor": "Run",
+    "Python.5.4 custom layers.executor": "Run",
+    "Python.5.5 read and write files.executor": "Run",
+    "Python.5.6 GPU.executor": "Run",
+    "Python.6.1 From fully connected layers to convolutions.executor": "Run",
+    "Python.6.2 image convolution.executor": "Run",
+    "Python.6.4 multiple-input multiple-output channel.executor": "Run",
+    "Python.Dropout.executor": "Run",
+    "Python.demo.executor": "Run",
+    "Python.tensorboard.executor": "Run",
+    "Python.tensorboard_demo.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.codeium.enabled": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/A/IDM/Compressed/intellij-micropython-1.4.6-2024.2.zip",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="PyConsoleOptionsProvider">
     <option name="myCodeCompletionOption" value="Runtime" />
   </component>
@@ -111,6 +114,58 @@
       <recent name="E:\PycharmProjects\Pytorch\1" />
       <recent name="E:\PycharmProjects\Pytorch" />
     </key>
+  </component>
+  <component name="RunManager" selected="Python.6.4 multiple-input multiple-output channel">
+    <configuration name="6.2 image convolution" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Pytorch" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/6.2 image convolution.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="6.4 multiple-input multiple-output channel" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Pytorch" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/6.4 multiple-input multiple-output channel.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.6.4 multiple-input multiple-output channel" />
+      <item itemvalue="Python.6.2 image convolution" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.6.4 multiple-input multiple-output channel" />
+        <item itemvalue="Python.6.2 image convolution" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -204,7 +259,9 @@
       <workItem from="1733724594242" duration="4197000" />
       <workItem from="1733759762181" duration="613000" />
       <workItem from="1733818561601" duration="7403000" />
-      <workItem from="1733845476620" duration="350000" />
+      <workItem from="1733845476620" duration="472000" />
+      <workItem from="1733876405513" duration="3793000" />
+      <workItem from="1734015951534" duration="2801000" />
     </task>
     <task id="LOCAL-00001" summary="2024-11-5 19:20">
       <option name="closed" value="true" />
@@ -342,7 +399,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733760322805</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="2024-12-10 23:53">
+      <option name="closed" value="true" />
+      <created>1733845947306</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1733845947306</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -389,14 +454,15 @@
     <MESSAGE value="2024-12-1 0:25" />
     <MESSAGE value="2024-12-4 0:32" />
     <MESSAGE value="2024-12-10 0:06" />
-    <option name="LAST_COMMIT_MESSAGE" value="2024-12-10 0:06" />
+    <MESSAGE value="2024-12-10 23:53" />
+    <option name="LAST_COMMIT_MESSAGE" value="2024-12-10 23:53" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Pytorch$3_7_Simple_implementation_of_softmax_regression.coverage" NAME="3.7 Simple implementation of softmax regression 覆盖结果" MODIFIED="1731722802093" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$2_6_probability.coverage" NAME="2.6 probability 覆盖结果" MODIFIED="1731337200292" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$5_2_parameter_management.coverage" NAME="5.2 parameter management 覆盖结果" MODIFIED="1733240183085" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$2_4_calculus.coverage" NAME="2.4 calculus 覆盖结果" MODIFIED="1731134149143" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Pytorch$6_1_From_fully_connected_layers_to_convolutions.coverage" NAME="6.1 From fully connected layers to convolutions 覆盖结果" MODIFIED="1733824393878" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Pytorch$6_1_From_fully_connected_layers_to_convolutions.coverage" NAME="6.1 From fully connected layers to convolutions 覆盖结果" MODIFIED="1733878202736" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$5_6_GPU.coverage" NAME="5.6 GPU 覆盖结果" MODIFIED="1733818574909" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$demo.coverage" NAME="demo 覆盖结果" MODIFIED="1730537270156" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$3_6_softmax_regression_from_zero_implementation.coverage" NAME="3.6 softmax regression from zero implementation 覆盖结果" MODIFIED="1731718880595" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -424,6 +490,8 @@
     <SUITE FILE_PATH="coverage/Pytorch$2_2_data_pre_processing.coverage" NAME="2.2 data pre-processing 覆盖结果" MODIFIED="1730986536786" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$3_4_softmax_regression.coverage" NAME="3.4 softmax regression 覆盖结果" MODIFIED="1731597595025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$5_4_custom_layers.coverage" NAME="5.4 custom layers 覆盖结果" MODIFIED="1733725982279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Pytorch$6_2_image_convolution.coverage" NAME="6.2 image convolution 覆盖结果" MODIFIED="1734018020742" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Pytorch$6_4_multiple_input_multiple_output_channel.coverage" NAME="6.4 multiple-input multiple-output channel 覆盖结果" MODIFIED="1734018915550" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$4_9_Environment_and_Distribution_Offset.coverage" NAME="4.9 Environment and Distribution Offset 覆盖结果" MODIFIED="1732871600110" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$5_3_deferred_initialization.coverage" NAME="5.3 deferred initialization 覆盖结果" MODIFIED="1733243540787" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Pytorch$4_2_Implementation_of_multilayer_perceptron_from_scratch.coverage" NAME="4.2 Implementation of multilayer perceptron from scratch 覆盖结果" MODIFIED="1731940087364" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
