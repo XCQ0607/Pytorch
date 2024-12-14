@@ -35,13 +35,13 @@ def comp_conv2d(conv2d, X):
     - 输出张量的形状
     """
     # 初始化卷积层的权重
-    conv2d.reset_parameters()
+    conv2d.reset_parameters()    # 初始化权重，初始化方法是PyTorch的默认方法kaiming_uniform_, 均匀分布，范围为[-sqrt(k), sqrt(k)]，k = 1 / fan_in，fan_in是输入通道数乘以卷积核的高度和宽度
     # 调整输入形状为 (批量大小, 通道数, 高度, 宽度)
-    X = X.unsqueeze(0).unsqueeze(0)
+    X = X.unsqueeze(0).unsqueeze(0)    # 添加批量和通道维度
     # 进行卷积操作
-    Y = conv2d(X)
+    Y = conv2d(X)    # 进行卷积操作
     # 返回去除批量和通道后的形状
-    return Y.squeeze(0).squeeze(0).shape
+    return Y.squeeze(0).squeeze(0).shape    # 返回去除批量和通道后的形状
 
 # 示例 1：使用填充1的3x3卷积核
 print("示例1：填充(padding=1) 的3x3卷积核")
@@ -49,15 +49,18 @@ conv1 = nn.Conv2d(in_channels=1, out_channels=1, kernel_size=3, padding=1)
 X1 = torch.rand(8, 8)  # 输入张量形状为 (8, 8)
 print(f"输入形状: {X1.shape}")
 output_shape1 = comp_conv2d(conv1, X1)
-print(f"输出形状: {output_shape1}")
+print(f"输出形状: {output_shape1}")  # 输出形状为 (8, 8)
+#output_height = (8 + 2*1 - 3) / 1 + 1 = 8 (input_height - kernel_height + 2*padding) / stride + 1
 print_separator()
 
 # 示例 2：使用不同高度和宽度的填充
 print("示例2：填充(padding=(2,1)) 的5x3卷积核")
-conv2 = nn.Conv2d(in_channels=1, out_channels=1, kernel_size=(5,3), padding=(2,1))
+conv2 = nn.Conv2d(in_channels=1, out_channels=1, kernel_size=(5,3), padding=(2,1))  #padding=(2,1)指的是在高度方向上填充2行，在宽度方向上填充1列
 X2 = torch.rand(8, 8)
 print(f"输入形状: {X2.shape}")
 output_shape2 = comp_conv2d(conv2, X2)
+#output_height = (8 + 2*2 - 5) / 1 + 1 = 8  (input_height - kernel_height + 2*padding_hight) / stride + 1
+#output_width = (8 + 2*1 - 3) / 1 + 1 = 8  (input_width - kernel_width + 2*padding_width) / stride + 1
 print(f"输出形状: {output_shape2}")
 print_separator()
 
@@ -69,13 +72,13 @@ print("示例3：步幅(stride=2) 的3x3卷积核")
 conv3 = nn.Conv2d(in_channels=1, out_channels=1, kernel_size=3, padding=1, stride=2)
 X3 = torch.rand(8, 8)
 print(f"输入形状: {X3.shape}")
-output_shape3 = comp_conv2d(conv3, X3)
+output_shape3 = comp_conv2d(conv3, X3)  #相当于conv3(X3)
 print(f"输出形状: {output_shape3}")
 print_separator()
 
 # 示例4：使用不同高度和宽度的步幅
 print("示例4：步幅(stride=(3,4)) 的3x5卷积核，填充=(0,1)")
-conv4 = nn.Conv2d(in_channels=1, out_channels=1, kernel_size=(3,5), padding=(0,1), stride=(3,4))
+conv4 = nn.Conv2d(in_channels=1, out_channels=1, kernel_size=(3,5), padding=(0,1), stride=(3,4))    #stride=(3,4)表示在高度方向上移动3个步长，在宽度方向上移动4个步长
 X4 = torch.rand(8, 8)
 print(f"输入形状: {X4.shape}")
 output_shape4 = comp_conv2d(conv4, X4)
