@@ -4,7 +4,7 @@ print("6.6. 卷积神经网络（LeNet）\n")
 import torch
 from torch import nn, optim
 import torch.nn.functional as F
-from torchvision import datasets, transforms
+from torchvision import datasets, transforms    # 导入数据集处理相关的模块
 from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 import time
@@ -59,7 +59,7 @@ transform = transforms.Compose([
 ])
 
 # 下载训练和测试数据集
-train_dataset = datasets.FashionMNIST(root='data', train=True, download=True, transform=transform)
+train_dataset = datasets.FashionMNIST(root='data', train=True, download=True, transform=transform)  # 训练集，MNIST数据集是60000张训练图像，10000张测试图像
 test_dataset = datasets.FashionMNIST(root='data', train=False, download=True, transform=transform)
 
 # 定义数据加载器
@@ -99,13 +99,28 @@ def evaluate_accuracy_gpu(net, data_loader, device):
     - acc (float): 准确率
     """
     net.eval()  # 设置模型为评估模式
-    correct, total = 0, 0
+    correct, total = 0, 0   # 初始化正确预测数和总样本数
     with torch.no_grad():
         for X, y in data_loader:
             X, y = X.to(device), y.to(device)
             outputs = net(X)
-            _, predicted = torch.max(outputs, 1)
+            _, predicted = torch.max(outputs, 1)    #_,predicted 分别是预测值和真实标签
+            '''
+            在表达式 torch.max(outputs, 1) 中：
+            outputs 是一个张量，通常包含模型对每个类别的预测概率或得分。
+            1 指定了要在哪个维度上寻找最大值。在 PyTorch 中，维度编号从 0 开始。因此，dim=1 通常意味着在第二个维度上操作，这个维度通常对应于类别或特征的数量。
+            对于一个形状为 [batch_size, num_classes] 的 outputs 张量（其中 batch_size 是批次大小，num_classes 是类别数），torch.max(outputs, 1) 将在每个样本的类别维度上寻找最大值及其索引。
+            
+            torch.max(input, dim, keepdim=False, out=None) -> (Tensor, LongTensor)
+            input：输入的张量。
+            dim：在指定的维度上寻找最大值。
+            keepdim：一个布尔值，指示输出张量是否应该保持输入的维度。默认为 False。
+            out：一个可选参数，用于指定输出张量。
+            函数返回两个张量：第一个张量包含最大值，第二个张量包含这些最大值在指定维度上的索引。
+            
+            '''
             correct += (predicted == y).sum().item()
+            #output 通常是一个包含模型对每个类别的预测概率的张量。这些概率值通常不是整数，而是介于 0 和 1 之间的浮点数。
             total += y.size(0)
     return correct / total
 
@@ -126,28 +141,29 @@ def train_model(net, train_loader, test_loader, num_epochs, lr, device):
     返回:
     - net (nn.Module): 训练好的模型
     """
-    net.to(device)
-    optimizer = optim.SGD(net.parameters(), lr=lr)
-    criterion = nn.CrossEntropyLoss()
+    net.to(device)  # 将模型移动到指定的设备
+    optimizer = optim.SGD(net.parameters(), lr=lr)  # 选择优化器
+    #net.parameters()是 net.parameters() 返回的是一个生成器，每次调用 next(net.parameters()) 都会返回一个参数的迭代器，
+    criterion = nn.CrossEntropyLoss()   # 选择损失函数
 
     for epoch in range(num_epochs):
         net.train()  # 设置模型为训练模式
-        running_loss = 0.0
-        running_acc = 0.0
-        start_time = time.time()
+        running_loss = 0.0  # 初始化损失
+        running_acc = 0.0   # 初始化准确率
+        start_time = time.time()    # 记录开始时间
 
         for X, y in train_loader:
-            X, y = X.to(device), y.to(device)
+            X, y = X.to(device), y.to(device)   # 将数据移动到指定的设备
             optimizer.zero_grad()  # 清零梯度
-            outputs = net(X)
-            loss = criterion(outputs, y)
+            outputs = net(X)      # 前向传播
+            loss = criterion(outputs, y)    # 计算损失
             loss.backward()  # 反向传播
             optimizer.step()  # 更新参数
 
-            running_loss += loss.item() * X.size(0)
+            running_loss += loss.item() * X.size(0) #总损失=损失*样本数
             running_acc += accuracy(outputs, y) * X.size(0)
 
-        epoch_loss = running_loss / len(train_loader.dataset)
+        epoch_loss = running_loss / len(train_loader.dataset)    # 计算每个epoch的损失
         epoch_acc = running_acc / len(train_loader.dataset)
         test_acc = evaluate_accuracy_gpu(net, test_loader, device)
         end_time = time.time()
@@ -207,19 +223,53 @@ print("6.6.4. 练习\n")
 print("练习1: 将平均汇聚层替换为最大汇聚层，会发生什么？\n")
 
 # 定义一个新的LeNet模型，将AvgPool2d替换为 MaxPool2d
+'''
+池化（Pooling）是什么？原理是什么？
+1. 池化的定义
+池化（Pooling）是卷积神经网络（CNN）中一种常用的下采样操作。它的主要目的是减少特征图的尺寸（即降维），同时保留重要的特征信息，以减少计算量和防止过拟合。
+2. 池化的原理
+池化操作通常是在卷积层之后进行的，它独立地对每个特征图进行操作，不改变特征图的数量。池化操作主要分为最大池化（Max Pooling）和平均池化（Average Pooling）两种。
+2.1 最大池化（Max Pooling）
+操作：在输入特征图上滑动一个固定大小的窗口（例如2x2），取窗口内的最大值作为输出特征图对应位置的值。
+原理：最大池化能够捕捉特征图中最显著的特征，即最“激活”的特征，同时减少特征图的尺寸。
+2.2 平均池化（Average Pooling）
+操作：在输入特征图上滑动一个固定大小的窗口（例如2x2），计算窗口内所有值的平均值作为输出特征图对应位置的值。
+原理：平均池化能够保留特征图的整体统计特性，即平滑特征图，减少特征图的尺寸，同时在一定程度上抑制噪声。
+3. 池化的作用
+降维：减少特征图的尺寸，从而减少后续卷积层的参数数量和计算量。
+特征不变性：通过池化操作，网络能够学习到一定程度的特征不变性，即对输入数据的微小变换（如平移、旋转等）不敏感。
+防止过拟合：通过减少特征图的尺寸和参数数量，池化操作有助于防止模型过拟合。
+4. 示例
+假设有一个4x4的特征图，使用2x2的池化窗口和步长为2进行最大池化：
+输入特征图：
+1 2 3 4
+5 6 7 8
+9 10 11 12
+13 14 15 16
+池化操作：
+  [1, 2, 3, 4] -> max(1, 2, 3, 4) = 4
+  [5, 6, 7, 8] -> max(5, 6, 7, 8) = 8
+  [9, 10, 11, 12] -> max(9, 10, 11, 12) = 12
+  [13, 14, 15, 16] -> max(13, 14, 15, 16) = 16
+输出特征图：
+4 8
+12 16
+通过上述池化操作，4x4的特征图被降维为2x2的特征图。
+'''
+
 net_maxpool = nn.Sequential(
-    nn.Conv2d(1, 6, kernel_size=5, padding=2),
-    nn.Sigmoid(),
-    nn.MaxPool2d(kernel_size=2, stride=2),
-    nn.Conv2d(6, 16, kernel_size=5),
-    nn.Sigmoid(),
-    nn.MaxPool2d(kernel_size=2, stride=2),
-    nn.Flatten(),
-    nn.Linear(16 * 5 * 5, 120),
-    nn.Sigmoid(),
-    nn.Linear(120, 84),
-    nn.Sigmoid(),
-    nn.Linear(84, 10)
+    nn.Conv2d(1, 6, kernel_size=5, padding=2),  #第一卷积层
+    nn.Sigmoid(),   # 激活函数
+    nn.MaxPool2d(kernel_size=2, stride=2),  # 第二汇聚层
+    nn.Conv2d(6, 16, kernel_size=5),    # 第三卷积层
+    nn.Sigmoid(),   # 激活函数
+    nn.MaxPool2d(kernel_size=2, stride=2),  # 第四汇聚层
+    nn.Flatten(),    # 展平
+    nn.Linear(16 * 5 * 5, 120), #第五全连接层
+    nn.Sigmoid(),   # 激活函数
+    nn.Linear(120, 84),  #第六全连接层
+    nn.Sigmoid(),   # 激活函数
+    nn.Linear(84, 10)   #第七全连接层
 )
 
 # 实例化并训练新的LeNet模型
@@ -235,7 +285,7 @@ print("练习2: 构建一个更复杂的LeNet网络以提高准确性\n")
 
 class LeNet_Complex(nn.Module):
     def __init__(self):
-        super(LeNet_Complex, self).__init__()
+        super(LeNet_Complex, self).__init__()   # 调用父类的初始化方法，继承父类的属性和方法，初始化LeNet模型的结构
         self.conv1 = nn.Conv2d(1, 32, 3, padding=1)  # 增加通道数和减小卷积核
         self.conv2 = nn.Conv2d(32, 64, 3, padding=1)
         self.conv3 = nn.Conv2d(64, 128, 3, padding=1)
@@ -404,13 +454,14 @@ class LeNet_VarConvLayers(nn.Module):
             out_channels *= 2  # 每增加一层，输出通道数翻倍
         self.conv = nn.Sequential(*layers)
         # 假设输入为28x28，经过3次2x2汇聚后为3x3
-        self.fc1 = nn.Linear(out_channels // 2 * 3 * 3, 120)
+        self.fc1 = nn.Linear(out_channels * 3 * 3, 120)
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, 10)
 
     def forward(self, x):
         x = self.conv(x)
-        x = x.view(-1, self.fc1.in_features)
+        # x = x.view(-1, self.fc1.in_features)
+        x = x.view(x.size(0), -1)  # 修改此处，自动计算展平后的特征数量
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
         x = self.fc3(x)

@@ -42,7 +42,7 @@ def corr2d_multi_in(X, K):
     # 添加输出通道维度
     K = K.unsqueeze(0)  # (1, c_i, k_h, k_w)
     # 执行卷积
-    Y = F.conv2d(X, K)  # (1, 1, h_out, w_out)
+    Y = F.conv2d(X, K)  # (1, 1, h_out, w_out)  ,参数X是conv2d的输入，参数K是卷积核,
     # 移除批次和通道维度
     return Y.squeeze(0).squeeze(0)  # (h_out, w_out)
 # ----------------------

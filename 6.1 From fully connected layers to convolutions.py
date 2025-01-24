@@ -33,8 +33,8 @@ print("="*60)
 # 转换为向量后长度为 3*256*256 = 196,608 个特征。
 # 若使用全连接层映射到 1000 个隐藏单元，则参数数量约为 196,608*1000 ≈ 1.96608e8 个参数。
 C, H, W = 3, 256, 256
-input_dim = C * H * W
-hidden_units = 1000
+input_dim = C * H * W   # input_dim是输入图像的特征维度
+hidden_units = 1000  # 隐藏单元数量
 
 fc_layer = nn.Linear(input_dim, hidden_units)
 # 查看全连接层参数量
@@ -101,7 +101,7 @@ print("="*60)
 # 假设输入为 (N, C, H, W) = (1, 1, 5, 5), 单通道小图像 N-Batch, C-Channel, H-Height, W-Width
 # 我们定义一个简单的卷积核来检测某些局部模式，比如中间的值。
 input_tensor = torch.zeros((1,1,5,5))
-input_tensor.fill_(2)
+input_tensor.fill_(2)   # 填充值为2
 # # input_tensor = torch.full((1, 1, 5, 5), 2.0)
 input_tensor[0,0,2,2] = 1.0  # 在中心位置放一个值为1的像素
 input_tensor[0,0,2,3] = 3.0  # 在[2.3]放一个值为3的像素
@@ -237,6 +237,7 @@ print("="*60)
 # 当输入有多通道时，卷积核会对每个通道分别加权，再求和产生输出通道特征。
 # 演示：输入通道数=3, 输出通道数=2, 卷积核=3x3
 multi_channel_conv = nn.Conv2d(in_channels=3, out_channels=2, kernel_size=3, padding=1, bias=True)
+#multi_channel_conv 的权重将使用默认的 Kaiming 初始化方法。
 
 # 随机输入(N=1张图片, C=3通道, H=4, W=4)
 multi_input = torch.randn(1, 3, 4, 4)
