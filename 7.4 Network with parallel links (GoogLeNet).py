@@ -6,6 +6,8 @@ import torchvision
 from torchvision import transforms
 import matplotlib.pyplot as plt
 
+from torch.utils.tensorboard import SummaryWriter
+
 # 输出目录和子目录的名称
 print("7.4. 含并行连结的网络（GoogLeNet）")
 
@@ -21,6 +23,46 @@ class Inception(nn.Module):
     :param c3: 第三条路径的输出通道数（包含1x1卷积和5x5卷积）
     :param c4: 第四条路径的输出通道数（包含3x3最大池化和1x1卷积）
     """
+    '''
+没有使用**kwargs的类定义
+在这个例子中，我们定义了一个简单的类SimpleClass，它接受四个固定的参数，并且没有使用**kwargs。
+class SimpleClass:
+    def __init__(self, param1, param2, param3, param4):
+        self.param1 = param1
+        self.param2 = param2
+        self.param3 = param3
+        self.param4 = param4
+    def display_params(self):
+        print(f"param1: {self.param1}")
+        print(f"param2: {self.param2}")
+        print(f"param3: {self.param3}")
+        print(f"param4: {self.param4}")
+# 创建SimpleClass的实例
+instance = SimpleClass(1, 2, 3, 4)
+instance.display_params()
+在这个例子中，SimpleClass的构造函数明确接受四个参数，并且没有提供任何灵活性来接受额外的关键字参数。
+
+使用了**kwargs的类定义
+现在，我们将修改SimpleClass以使用**kwargs，这样它就可以接受任意数量的关键字参数了。
+class SimpleClassWithKwargs:
+    def __init__(self, param1, param2, **kwargs):
+        self.param1 = param1
+        self.param2 = param2
+        self.additional_params = kwargs
+    def display_params(self):
+        print(f"param1: {self.param1}")
+        print(f"param2: {self.param2}")
+        print("Additional parameters:")
+        for key, value in self.additional_params.items():
+            print(f"{key}: {value}")
+# 创建SimpleClassWithKwargs的实例，并传递额外的关键字参数
+instance_with_kwargs = SimpleClassWithKwargs(1, 2, param3=3, param4=4, extra_param=5)
+instance_with_kwargs.display_params()
+在这个例子中，SimpleClassWithKwargs的构造函数接受两个固定的参数param1和param2，以及任意数量的关键字参数（通过**kwargs捕获）。这些额外的关键字参数被存储在一个名为additional_params的字典中，并且可以在类的其他方法中使用。
+
+通过这两个示例，您可以看到使用**kwargs可以为您的类定义提供更大的灵活性和可扩展性，因为它允许您接受任意数量的关键字参数，而不需要在类的构造函数中明确列出所有这些参数。
+    '''
+
 
     def __init__(self, in_channels, c1, c2, c3, c4, **kwargs):
         super(Inception, self).__init__(**kwargs)
@@ -45,7 +87,8 @@ class Inception(nn.Module):
         p3 = F.relu(self.p3_2(F.relu(self.p3_1(x))))
         p4 = F.relu(self.p4_2(self.p4_1(x)))
         # 在通道维度上连接四条路径的输出
-        return torch.cat((p1, p2, p3, p4), dim=1)
+        return torch.cat((p1, p2, p3, p4), dim=1)   # 沿着通道维度进行拼接
+    #cat()函数用于将多个张量沿着指定的维度进行拼接,dim=1表示沿着通道维度进行拼接
 
 
 # 7.4.2 GoogLeNet模型的定义
@@ -147,8 +190,14 @@ def train_model(net, train_iter, test_iter, num_epochs, lr, device):
             train_loss += loss.item()
             train_correct += (output.argmax(1) == y).sum().item()
 
+        train_lossratio = train_loss / len(train_iter.dataset)
         train_acc = train_correct / len(train_iter.dataset)
-        print(f"Epoch {epoch + 1}/{num_epochs}, Loss: {train_loss / len(train_iter)}, Train Accuracy: {train_acc:.4f}")
+
+        # 将训练损失和准确率写入TensorBoard
+        writer.add_scalar('Loss/train', train_lossratio, epoch)
+        writer.add_scalar('Accuracy/train', train_acc, epoch)
+
+        print(f"Epoch {epoch + 1}/{num_epochs}, Loss: {train_lossratio}, Train Accuracy: {train_acc:.4f}")
 
         net.eval()
         test_correct = 0
@@ -158,7 +207,12 @@ def train_model(net, train_iter, test_iter, num_epochs, lr, device):
                 output = net(X)
                 test_correct += (output.argmax(1) == y).sum().item()
 
+
+
         test_acc = test_correct / len(test_iter.dataset)
+        # 将测试准确率写入TensorBoard
+        writer.add_scalar('Accuracy/test', test_acc, epoch)
+        
         print(f"Test Accuracy: {test_acc:.4f}")
 
 
@@ -177,7 +231,11 @@ print(net)
 # 设置训练参数
 batch_size = 128
 num_epochs = 10
-lr = 0.1
+lr = 0.001
+
+# 初始化TensorBoard的SummaryWriter
+writer = SummaryWriter(log_dir='./logs/GoogleNet_model')
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # 加载数据
@@ -185,6 +243,13 @@ train_iter, test_iter = load_data_fashion_mnist(batch_size, resize=96)
 
 # 训练模型
 train_model(net, train_iter, test_iter, num_epochs, lr, device)
+
+# 关闭TensorBoard writer
+writer.close()
+
+print("TensorBoard logs generated. To view them, run:")
+print("tensorboard --logdir=logs")
+print("Then open http://localhost:6006 in your browser")
 
 # 总结：
 # 1. Inception: 定义了GoogLeNet中的Inception块，用于不同卷积操作的并行计算。

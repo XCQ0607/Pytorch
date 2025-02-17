@@ -47,8 +47,8 @@ def create_nin_model(num_classes=10):
         nn.MaxPool2d(3, stride=2),
         nn.Dropout(0.5),
         nin_block(384, num_classes, kernel_size=3, strides=1, padding=1),
-        nn.AdaptiveAvgPool2d((1, 1)),
-        nn.Flatten()
+        nn.AdaptiveAvgPool2d((1, 1)),   # 全局平均池化层，将每个通道的特征图转换为1x1的特征图
+        nn.Flatten()                    # 展平层，将特征图转换为一维向量
     )
     return net
 
@@ -62,19 +62,30 @@ def load_data_fashion_mnist(batch_size, resize=None):
     :param resize: 如果指定，图像将会调整到该大小
     :return: 训练和测试数据的迭代器
     """
-    transform = [transforms.ToTensor()]
-    if resize:
+    transform = [transforms.ToTensor()] # 定义数据变换，将图像转换为张量
+    if resize:  # 如果指定了调整大小，则添加Resize变换
         transform.insert(0, transforms.Resize(resize))
-    transform = transforms.Compose(transform)
-
+    transform = transforms.Compose(transform)   # transforms.Compose是一个组合变换的类，它可以将多个变换组合成一个操作
+    '''
+    1. transforms是什么？
+    transforms通常指的是图像处理库中的一个模块，它提供了一系列用于图像预处理和增强的函数。在PyTorch的torchvision库中，transforms模块包含了多种图像变换操作，如裁剪、旋转、调整大小、归一化等。这些操作可以用于数据增强，提高模型的泛化能力，或者将图像数据转换为模型可以接受的格式。
+    2. transforms.Compose有什么作用？
+    transforms.Compose是transforms模块中的一个类，它用于将多个图像变换操作组合成一个序列。这样，当需要对图像应用一系列变换时，可以方便地将这些变换封装成一个单一的操作。在上面的代码中，transforms.Compose(transform)就是将transform列表中的变换操作组合起来，形成一个可以一次性应用于图像的变换序列。
+    3. resize是什么？
+    resize是一个变量，它通常表示要将图像调整到的目标大小。在上面的代码中，resize是一个可选的参数，如果指定了它的值（通常是一个元组，表示新的宽度和高度），则会将transforms.Resize(resize)添加到变换序列中。
+    4. transform.insert是什么？
+    transform.insert是Python列表（list）的一个方法，用于在列表的指定位置插入一个元素。在上面的代码中，transform.insert(0, transforms.Resize(resize))的作用是在transform列表的开头（索引为0的位置）插入一个transforms.Resize(resize)变换操作。这样，当应用这个变换序列时，Resize变换会首先被应用。
+    5. resize的变量类型是什么？
+    resize的变量类型通常是一个元组（tuple），它包含两个整数，分别表示调整后的图像宽度和高度。例如，resize=(256, 256)表示将图像调整为256x256像素的大小。有些实现也可能允许使用单一的整数作为参数，这通常意味着图像将被调整为该整数指定的正方形大小（即宽度和高度相等）。
+    '''
     # 加载训练集和测试集
-    train_dataset = torchvision.datasets.FashionMNIST(root='./data', train=True, download=True, transform=transform)
+    train_dataset = torchvision.datasets.FashionMNIST(root='./data', train=True, download=True, transform=transform)    # 使用transforms.Compose将变换组合成一个操作
     test_dataset = torchvision.datasets.FashionMNIST(root='./data', train=False, download=True, transform=transform)
 
     train_iter = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     test_iter = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
-    return train_iter, test_iter
+    return train_iter, test_iter    # 返回训练集和测试集的迭代器
 
 
 # 训练函数
@@ -109,14 +120,14 @@ def train_model(net, train_iter, test_iter, num_epochs, lr, device):
 
             train_loss += loss.item()
             train_correct += (output.argmax(1) == y).sum().item()
-
+        #在大多数深度学习框架中（如PyTorch），数据迭代器（DataLoader）通常封装了一个数据集（Dataset）
         train_acc = train_correct / len(train_iter.dataset)
         print(f"Epoch {epoch + 1}/{num_epochs}, Loss: {train_loss / len(train_iter)}, Train Accuracy: {train_acc:.4f}")
 
         # 测试模型
         net.eval()
         test_correct = 0
-        with torch.no_grad():
+        with torch.no_grad():    # 关闭梯度计算，以避免对测试过程产生影响
             for X, y in test_iter:
                 X, y = X.to(device), y.to(device)
                 output = net(X)
@@ -142,7 +153,7 @@ print(net)
 # 设置训练参数
 batch_size = 128
 num_epochs = 10
-lr = 0.1
+lr = 0.001
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # 加载数据
