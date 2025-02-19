@@ -16,11 +16,13 @@ class ResidualBlock(nn.Module):
     定义ResNet中的基本残差块（Residual Block）。
     """
 
-    def __init__(self, input_channels, output_channels, use_1x1conv=False, stride=1):
+    # def __init__(self, input_channels, output_channels, use_1x1conv=False, stride=1):
+    def __init__(self, input_channels, output_channels, use_1x1conv=False, stride=1, dropout_rate=0.5):
         super(ResidualBlock, self).__init__()
 
         self.conv1 = nn.Conv2d(input_channels, output_channels, kernel_size=3, stride=stride, padding=1)    # 卷积层
         self.bn1 = nn.BatchNorm2d(output_channels)  # 批量归一化层
+        self.dropout = nn.Dropout(dropout_rate)
 
         self.conv2 = nn.Conv2d(output_channels, output_channels, kernel_size=3, stride=1, padding=1)
         self.bn2 = nn.BatchNorm2d(output_channels)
@@ -44,6 +46,7 @@ class ResidualBlock(nn.Module):
         '''
     def forward(self, X):
         Y = F.relu(self.bn1(self.conv1(X)))  # 第一个卷积层
+        Y = self.dropout(Y)
         Y = self.bn2(self.conv2(Y))  # 第二个卷积层
 
         if self.conv3:
@@ -232,13 +235,15 @@ if __name__ == '__main__':
     # 配置参数
     BATCH_SIZE = 256
     EPOCHS_NUM = 30
-    LEARNING_RATE = 0.05
+    LEARNING_RATE = 0.01
 
     # 创建ResNet模型
     model = ResNet(num_classes=10)
     train_loader, test_loader = fashionMNIST_loader(BATCH_SIZE, resize=96)
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.SGD(model.parameters(), LEARNING_RATE)
+    #optimizer = optim.SGD(model.parameters(), LEARNING_RATE, weight_decay=1e-4)  # weight_decay是L2正则化的参数
+
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     # 使用Trainer进行训练
